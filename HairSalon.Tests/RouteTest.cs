@@ -16,5 +16,37 @@ namespace KrillinStylesTests
 			IActionResult view = controller.Index();
 			Assert.IsInstanceOfType(view, typeof(ViewResult));
 		}
+
+		[TestMethod]
+		public void Test_Route_HomeController_Get_New()
+		{
+			HomeController controller = new HomeController();
+			IActionResult view = controller.New();
+			Assert.IsInstanceOfType(view, typeof(ViewResult));
+		}
+
+		[TestMethod]
+		public void Test_Route_StylistController_Get_Index()
+		{
+			StylistController controller = new StylistController();
+			IActionResult view = controller.Index();
+			Assert.IsInstanceOfType(view, typeof(ViewResult));
+		}
+
+		[TestMethod]
+		public void Test_Route_StylistController_Get_Update()
+		{
+			StylistController controller = new StylistController();
+			IActionResult view = controller.Update();
+			Assert.IsInstanceOfType(view, typeof(ViewResult));
+		}
+
+		[TestMethod]
+		public void Test_Route_StylistController_Get_Create()
+		{
+			StylistController controller = new StylistController();
+			IActionResult view = controller.Create();
+			Assert.IsInstanceOfType(view, typeof(ViewResult));
+		}
 	}
 }

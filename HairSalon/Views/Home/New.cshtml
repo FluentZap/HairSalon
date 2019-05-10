@@ -5,13 +5,17 @@
 <link rel="stylesheet" href="~/css/index.css" />
 
 <div class="text-center">
-	<h1 class="display-3">Welcome Stylist</h1>	
-	<h4 class="text-danger">@ViewBag.message</h4>
-	
-	<form asp-controller="Stylist" asp-action="Update" method="post">
+	<h1 class="display-3">Create New Stylist</h1>	
+
+	<form asp-controller="Stylist" asp-action="Create" method="post">
 		<div class="form-group">
 			<label for="userId">User Name</label>
 			<input type="text" class="form-control" name="login_name" placeholder="Stylist">
+		</div>
+
+		<div class="form-group">
+			<label for="userId">Stylist Name</label>
+			<input type="text" class="form-control" name="name" placeholder="Krillin">
 		</div>
 
 		<div class="form-group">
@@ -19,6 +23,6 @@
 			<input type="password" class="form-control" name="password" placeholder="Password">
 		</div>
 
-		<button class="btn-primary" type="submit">Login</button>
+		<button class="btn-primary" type="submit">Create</button>
 	</form>
 </div>

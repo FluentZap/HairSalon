@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 
-namespace KrillinStyles
+namespace KrillinStyles.Database
 {
 	public partial class DB
 	{

@@ -44,7 +44,12 @@ html {
 body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
+  background-color: initial;
+  color: white;
+  box-sizing: content-box;
 }
+
+
 .footer {
   position: absolute;
   bottom: 0;
@@ -53,4 +58,35 @@ body {
   /* Set the fixed height of the footer here */
   height: 60px;
   line-height: 60px; /* Vertically center the text there */
+  color: white;
+}
+
+
+.splash {
+	background-image: url("../img/backgroundMedium.jpeg");
+	background-color: lightgray;
+	height: 100%;	
+	position: relative;
+	background-attachment: fixed;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	width: 100%;
+}
+
+.display-3, .navbar-brand {
+	font-family: saiyan_sansregular;
+	opacity: 1;
+	color: white;
+}
+
+nav {
+	opacity: 0.65;
+}
+
+@font-face {
+	font-family: 'saiyan_sansregular';
+	src: url('/font/saiyan-sans-webfont.woff2') format('woff2'), url('/font/saiyan-sans-webfont.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
 }
