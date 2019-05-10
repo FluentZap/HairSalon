@@ -40,7 +40,8 @@ namespace KrillinStyles
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-            }
+				app.UseDatabaseErrorPage();
+			}
             else
             {
                 app.UseExceptionHandler("/Home/Error");
@@ -49,7 +50,7 @@ namespace KrillinStyles
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
-            app.UseMvc(routes =>
+			app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
