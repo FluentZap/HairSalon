@@ -12,7 +12,7 @@ namespace KrillinStyles.Controllers
     {
         public IActionResult Index(int message)
         {
-			ViewBag.message = ErrorCodeMessages.FromCode(1);
+			ViewBag.message = ErrorCodeMessages.FromCode(message);
 			return View();
         }
 

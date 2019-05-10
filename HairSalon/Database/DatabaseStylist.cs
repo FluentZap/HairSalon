@@ -14,7 +14,7 @@ namespace KrillinStyles.Database
 			MySqlConnection conn = DB.Connection();
 			conn.Open();
 			MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-			cmd.CommandText = @"SELECT * FROM users WHERE login_name = @login_name;";
+			cmd.CommandText = @"SELECT * FROM stylist WHERE login_name = @login_name;";
 			cmd.Parameters.AddWithValue("@login_name", login_name);
 			MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
 			bool exists = rdr.Read();
