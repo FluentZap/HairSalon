@@ -12,7 +12,7 @@ namespace KrillinStyles.Controllers
 			switch (code)
 			{
 				case 1:
-					return "User name already exists";
+					return "Please Login";
 				default:
 					break;
 			}
