@@ -17,18 +17,19 @@ CREATE TABLE IF NOT EXISTS `client` (
   `stylist_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `phone_number` varchar(255) NOT NULL,
-  `alt_phone_number` varchar(255) NOT NULL,
+  `alt_phone_number` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `stylist`;
 CREATE TABLE IF NOT EXISTS `stylist` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `session_id` varchar(255) NOT NULL,
   `login_name` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `visit`;
 CREATE TABLE IF NOT EXISTS `visit` (
@@ -43,17 +44,6 @@ CREATE TABLE IF NOT EXISTS `visit` (
 COMMIT;
 ```
 
-
-## Usage
-
-```C#
-function syntax
-```
-
-## Program Specifications
-|Description|Input|Output|
-|-|-|-|
-|Match a single letter and return count|("f", "f")|1|
 
 ## Support
 If there are any issues or errors contact me

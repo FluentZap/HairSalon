@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: May 10, 2019 at 06:37 PM
+-- Generation Time: May 11, 2019 at 03:27 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `todd_aden`
+-- Database: `todd_aden_test`
 --
 
 -- --------------------------------------------------------
@@ -34,9 +34,9 @@ CREATE TABLE IF NOT EXISTS `client` (
   `stylist_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `phone_number` varchar(255) NOT NULL,
-  `alt_phone_number` varchar(255) NOT NULL,
+  `alt_phone_number` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -47,11 +47,20 @@ CREATE TABLE IF NOT EXISTS `client` (
 DROP TABLE IF EXISTS `stylist`;
 CREATE TABLE IF NOT EXISTS `stylist` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `session_id` varchar(255) NOT NULL,
   `login_name` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `stylist`
+--
+
+INSERT INTO `stylist` (`id`, `session_id`, `login_name`, `name`, `password`) VALUES
+(1, '820add4c-793b-c1b1-611c-bbbe5255d64b', 'root', 'root', 'root'),
+(9, '62145b09-15f1-9722-760f-a66448d00f2e', 'test_man', 'Test Man', 'root');
 
 -- --------------------------------------------------------
 

@@ -47,21 +47,7 @@ namespace KrillinStyles.Database
 
 			DB.Close(conn);
 			return exists;
-		}
-
-		public static bool UserCheckByName(string login_name)
-		{
-			MySqlConnection conn = DB.Connection();
-			conn.Open();
-			MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-			cmd.CommandText = @"SELECT * FROM stylist WHERE login_name = @login_name;";
-			cmd.Parameters.AddWithValue("@login_name", login_name);
-			MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
-			bool exists = rdr.Read();
-
-			DB.Close(conn);
-			return exists;
-		}
+		}		
 
 		public static void UserUpdateSessionId(string login_name, string session_id)
 		{
@@ -185,7 +171,7 @@ namespace KrillinStyles.Database
 
 		public static bool UserLogin(string login_name, string password, string session_id)
 		{
-			if (UserCheckByName(login_name))
+			if (UserExists(login_name))
 			{
 				User user = UserGetByName(login_name);
 				if (user.Password == password)
