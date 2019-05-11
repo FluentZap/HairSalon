@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "Welcome";
+}
+
+<link rel="stylesheet" href="~/css/index.css" />
+
+<div class="text-center">
+	<h1 class="display-3">Welcome @ViewBag.StylistName</h1>
+	<h4 class="text-danger">@ViewBag.message</h4>
+
+	<h3>Current Clients of @ViewBag.User.Name</h3>
+
+	<div class="container clientBG">
+		@if (ViewBag.ClientList != null)
+		{
+			foreach (Client item in ViewBag.ClientList)
+			{
+				<p>Client: @item.Name</p>
+				<p>Phone Number: @item.Phone_number</p>
+				if (item.Alt_phone_number != "")
+				{
+					<p>Alternate Phone Number: @item.Alt_phone_number</p>
+				}
+				<hr>
+			}
+		}
+	</div>
+</div>

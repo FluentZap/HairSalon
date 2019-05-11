@@ -9,6 +9,19 @@ namespace KrillinStyles.Database
 	public partial class DB
 	{
 
+		public static bool UserExistsById(string id)
+		{
+			MySqlConnection conn = DB.Connection();
+			conn.Open();
+			MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+			cmd.CommandText = @"SELECT * FROM stylist WHERE id = @id;";
+			cmd.Parameters.AddWithValue("@id", id);
+			MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+			bool exists = rdr.Read();
+			DB.Close(conn);
+			return exists;
+		}
+
 		public static bool UserExists(string login_name)
 		{
 			MySqlConnection conn = DB.Connection();
@@ -89,6 +102,29 @@ namespace KrillinStyles.Database
 			return cmd.LastInsertedId;
 		}
 
+		public static List<User> UserGetAll()
+		{
+			List<User> users = new List<User>();
+			MySqlConnection conn = DB.Connection();
+			conn.Open();
+			MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+			cmd.CommandText = @"SELECT * FROM stylist;";			
+			MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+			while (rdr.Read())
+			{
+				User user = new User
+				{
+					Id = rdr.GetInt32(0),
+					Session_id = rdr.GetString(1),
+					Login_name = rdr.GetString(2),
+					Name = rdr.GetString(3),
+					Password = rdr.GetString(4)
+				};
+				users.Add(user);
+			}						
+			DB.Close(conn);
+			return users;
+		}
 
 		public static User UserGetByName(string login_name)
 		{
@@ -117,6 +153,25 @@ namespace KrillinStyles.Database
 			MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
 			cmd.CommandText = @"SELECT * FROM stylist WHERE session_id = @session_id;";
 			cmd.Parameters.AddWithValue("@session_id", session_id);
+			MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+			rdr.Read();
+			user.Id = rdr.GetInt32(0);
+			user.Session_id = rdr.GetString(1);
+			user.Login_name = rdr.GetString(2);
+			user.Name = rdr.GetString(3);
+			user.Password = rdr.GetString(4);
+			DB.Close(conn);
+			return user;
+		}
+
+		public static User UserGetById(string id)
+		{
+			User user = new User();
+			MySqlConnection conn = DB.Connection();
+			conn.Open();
+			MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+			cmd.CommandText = @"SELECT * FROM stylist WHERE id = @id;";
+			cmd.Parameters.AddWithValue("@id", id);
 			MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
 			rdr.Read();
 			user.Id = rdr.GetInt32(0);

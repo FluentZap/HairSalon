@@ -9,7 +9,7 @@ using KrillinStyles.Database;
 
 namespace KrillinStyles.Controllers
 {
-	public class StylistController : Controller
+	public class ClientController : Controller
 	{
 
 		public void InitSession()
@@ -22,8 +22,7 @@ namespace KrillinStyles.Controllers
 			if (!DB.UserCheckBySessionId(HttpContext.Session.Id)) { return RedirectToAction("index", "home"); } //check for logout
 			ViewBag.LoggedIn = true;
 			User user = DB.UserGetBySessionId(HttpContext.Session.Id);
-			List<User> users = DB.UserGetAll();
-			ViewBag.UserList = users;
+			ViewBag.ClientList = DB.ClientGetAll();			
 			ViewBag.StylistName = user.Name;
 			return View();
 		}			
@@ -33,10 +32,11 @@ namespace KrillinStyles.Controllers
 			if (!DB.UserCheckBySessionId(HttpContext.Session.Id)) { return RedirectToAction("index", "home"); } //check for logout
 			ViewBag.LoggedIn = true;
 			ViewBag.message = ErrorCodeMessages.FromCode(message);
+			List<User> users = DB.UserGetAll();
+			ViewBag.UserList = users;
 			return View();
 		}
 		
-
 		public IActionResult Show(string userId)
 		{
 			if (!DB.UserCheckBySessionId(HttpContext.Session.Id)) { return RedirectToAction("index", "home"); } //check for logout						
@@ -58,23 +58,14 @@ namespace KrillinStyles.Controllers
 
 		}
 
-		public IActionResult Create(string login_name, string name, string password)
-		{
-			InitSession();
-			login_name.ToLower();
-			if (login_name == null || name == null || password == null)
+		public IActionResult Create(string client_name, string phone_number, string alt_phone_number, string stylist_id)
+		{						
+			if (client_name == null || phone_number == null || stylist_id == null)
 			{
-				return RedirectToAction("new", new { message = 2 });
+				return RedirectToAction("new", new { message = 3 });
 			}
-			if (!DB.UserExists(login_name))
-			{
-				DB.UserCreate(login_name, HttpContext.Session.Id, name, password);
-				return RedirectToAction("index");
-			}
-			else
-			{
-				return RedirectToAction("new", new { message = 1 });
-			}
+			DB.ClientCreate(stylist_id, client_name, phone_number, alt_phone_number);
+			return RedirectToAction("index");
 		}
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

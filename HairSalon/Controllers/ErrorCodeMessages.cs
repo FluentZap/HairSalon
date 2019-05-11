@@ -15,6 +15,8 @@ namespace KrillinStyles.Controllers
 					return "User name already exists";
 				case 2:
 					return "All fields must be completed";
+				case 3:
+					return "Please enter a name and a phone number";
 				default:
 					break;
 			}

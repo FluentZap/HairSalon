@@ -29,7 +29,7 @@ html {
   box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
-button.accept-policy {
+accept-policy {
   font-size: 1rem;
   line-height: inherit;
 }
@@ -45,8 +45,7 @@ body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
   background-color: initial;
-  color: white;
-  box-sizing: content-box;
+  color: white;  
 }
 
 

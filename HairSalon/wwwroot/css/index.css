@@ -4,6 +4,27 @@
 	margin-right: auto;
 }
 
+select {
+	max-width: 400px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
 .form-group {
 	opacity: 0.95;
+}
+
+
+.clientBG {	
+	background-color: darkgoldenrod;
+	background-color: rgba(78, 65, 12, 0.82);
+}
+
+a {
+	color: white;
+}
+
+a:hover {
+	color: lightcyan;
+	text-decoration: none;
 }

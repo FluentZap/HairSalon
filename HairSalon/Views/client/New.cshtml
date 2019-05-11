@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Welcome";
+}
+
+<link rel="stylesheet" href="~/css/index.css" />
+
+<div class="text-center">
+	<h1 class="display-3">Add New Client</h1>
+	<h4 class="text-danger">@ViewBag.message</h4>
+
+	<form asp-controller="client" asp-action="create" method="post">
+
+
+		<label for="stylist_id">Primary Stylist</label>
+		<select class="form-control" name="stylist_id">
+			@foreach (User item in ViewBag.UserList)
+			{				
+				<option value="@item.Id">@item.Name</option>
+			}			
+		</select>
+
+		<div class="form-group">
+			<label for="client_name">Client Name</label>
+			<input type="text" class="form-control" name="client_name" placeholder="Gohan">
+		</div>
+
+		<div class="form-group">
+			<label for="phone_number">Phone Number</label>
+			<input type="tel" class="form-control" name="phone_number">
+		</div>
+
+		<div class="form-group">
+			<label for="alt_phone_number">Alternate Phone Number</label>
+			<input type="tel" class="form-control" name="alt_phone_number">
+		</div>
+
+		<button class="btn-primary" type="submit">Add</button>
+	</form>
+</div>
