@@ -30,8 +30,16 @@ namespace KrillinStyles
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+			services.AddSession(options =>
+			{
+				// Set a short timeout for easy testing.
+				options.IdleTimeout = TimeSpan.FromMinutes(20);
+				options.Cookie.HttpOnly = true;
+				// Make the session cookie essential
+				options.Cookie.IsEssential = true;
+			});
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,6 +57,7 @@ namespace KrillinStyles
 
             app.UseStaticFiles();
             app.UseCookiePolicy();
+			app.UseSession();
 
 			app.UseMvc(routes =>
             {

@@ -11,27 +11,47 @@ namespace KrillinStyles.Controllers
 {
 	public class StylistController : Controller
 	{
-		public IActionResult Index()
-		{
-			return View();
+
+		public void InitSession()
+		{			
+			HttpContext.Session.Set("Id", new Byte[0]);
 		}
 
-		public IActionResult Update()
+		public IActionResult Index()
 		{
+			if (!DB.UserCheckBySessionId(HttpContext.Session.Id)) { return RedirectToAction("index", "home"); } //check for logout
+			ViewBag.LoggedIn = true;
+			User user = DB.UserGetBySessionId(HttpContext.Session.Id);
 
+			//ViewBag.ClientList = new List<string>()
+			ViewBag.StylistName = user.Name;
+			return View();
+		}			
+
+		public IActionResult New(int message)
+		{
+			if (!DB.UserCheckBySessionId(HttpContext.Session.Id)) { return RedirectToAction("index", "home"); } //check for logout
+			ViewBag.LoggedIn = true;
+			ViewBag.message = ErrorCodeMessages.FromCode(message);
 			return View();
 		}
 
 		public IActionResult Create(string login_name, string name, string password)
 		{
+			InitSession();
+			login_name.ToLower();
+			if (login_name == null || name == null || password == null)
+			{
+				return RedirectToAction("new", new { message = 2 });
+			}
 			if (!DB.UserExists(login_name))
 			{
-				DB.UserCreate(login_name, name, password);
-				return RedirectToAction("Index");
+				DB.UserCreate(login_name, HttpContext.Session.Id, name, password);
+				return RedirectToAction("index");
 			}
 			else
 			{
-				return RedirectToAction("Index", "Home", new { message = 1 });
+				return RedirectToAction("new", new { message = 1 });
 			}
 		}
 

@@ -19,12 +19,37 @@
 				</button>
 				<div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
 					<ul class="navbar-nav flex-grow-1">
-						<li class="nav-item">
-							<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="New">New Stylist</a>
-						</li>
+
+						@if (ViewBag.LoggedIn == null || !ViewBag.LoggedIn)
+						{
+							<li class="nav-item">
+								<a class="nav-link text-dark" asp-area="" asp-controller="home" asp-action="index">Login</a>
+							</li>
+						}
+
+						@if (ViewBag.LoggedIn != null && ViewBag.LoggedIn)
+						{
+							<li class="nav-item">
+								<a class="nav-link text-dark" asp-area="" asp-controller="home" asp-action="destroy">Logout</a>
+							</li>
+
+							<li class="nav-item">
+								<a class="nav-link text-dark" asp-area="" asp-controller="stylist" asp-action="new">New Stylist</a>
+							</li>
+
+							<li class="nav-item">
+								<a class="nav-link text-dark" asp-area="" asp-controller="stylist" asp-action="show">Stylist Directory</a>
+							</li>
+
+							<li class="nav-item">
+								<a class="nav-link text-dark" asp-area="" asp-controller="client" asp-action="index">Client Directory</a>
+							</li>
+
+							<li class="nav-item">
+								<a class="nav-link text-dark" asp-area="" asp-controller="visit" asp-action="index">Visit Directory</a>
+							</li>
+						}
+
 					</ul>
 				</div>
 			</div>

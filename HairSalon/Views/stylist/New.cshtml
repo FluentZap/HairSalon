@@ -5,7 +5,8 @@
 <link rel="stylesheet" href="~/css/index.css" />
 
 <div class="text-center">
-	<h1 class="display-3">Create New Stylist</h1>	
+	<h1 class="display-3">Create New Stylist</h1>
+	<h4 class="text-danger">@ViewBag.message</h4>
 
 	<form asp-controller="Stylist" asp-action="Create" method="post">
 		<div class="form-group">
@@ -23,6 +24,6 @@
 			<input type="password" class="form-control" name="password" placeholder="Password">
 		</div>
 
-		<button class="btn-primary" type="submit">Create</button>
+		<button class="btn-primary" type="submit">create</button>
 	</form>
 </div>

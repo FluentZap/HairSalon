@@ -18,7 +18,7 @@ namespace KrillinStyles
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
+			WebHost.CreateDefaultBuilder(args).ConfigureLogging(config => { config.ClearProviders(); })
                 .UseStartup<Startup>();
     }
 }
