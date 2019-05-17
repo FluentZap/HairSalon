@@ -4,19 +4,25 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using KrillinStyles.Controllers;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Session;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace KrillinStylesTests
 {	
 	[TestClass]
 	public class RouteTest
-	{		
+	{
 		//These route tests rely on using HttpContext.Session.Id, this is an instanced variable for accessing a user session
 		//There were some ways of creating a mock Session but it was more involved then i had time to get into
-
+		[TestInitialize]
+		public void TestSetup()
+		{
+			
+		}
 
 		//[TestMethod]
 		//public void Test_Route_HomeController_Get_Index()
-		//{						
+		//{
 		//	HomeController controller = new HomeController();
 		//	IActionResult view = controller.Index(0);
 		//	Assert.IsInstanceOfType(view, typeof(ViewResult));

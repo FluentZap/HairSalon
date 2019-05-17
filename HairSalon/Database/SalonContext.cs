@@ -22,7 +22,10 @@ namespace KrillinStyles.Database
 		
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			optionsBuilder.UseMySQL("server=localhost;database=todd_aden;user=root;password=root;port=3306;");
+			if (!optionsBuilder.IsConfigured)
+			{
+				optionsBuilder.UseMySQL("server=localhost;database=todd_aden;user=root;password=root;port=3306;");
+			}
 		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -11,7 +11,7 @@ namespace KrillinStyles.Database
 
 		public static long ClientCreate(int stylist_id, string name, string phone_number, string alt_phone_number)
 		{
-			using (var db = new SalonContext())
+			using (var db = new SalonContext(Options))
 			{
 				Stylist stylist = db.Stylists.Where(b => b.Id == stylist_id).FirstOrDefault();
 				Client client = new Client { Stylist = stylist, Name = name,
@@ -24,7 +24,7 @@ namespace KrillinStyles.Database
 
 		public static List<Client> ClientGetAll()
 		{
-			using (var db = new SalonContext())
+			using (var db = new SalonContext(Options))
 			{
 				var clients = db.Clients.ToList();
 				return clients;
@@ -33,7 +33,7 @@ namespace KrillinStyles.Database
 
 		public static List<Client> ClientGetAllFromUser(int stylist_id)
 		{
-			using (var db = new SalonContext())
+			using (var db = new SalonContext(Options))
 			{
 				var clients = db.Clients.Where(b => b.Stylist == DB.StylistGetById(stylist_id)).ToList();
 				return clients;
