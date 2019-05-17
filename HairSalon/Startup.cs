@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using KrillinStyles.Database;
+using Microsoft.EntityFrameworkCore;
 
 namespace KrillinStyles
 {
@@ -38,7 +40,7 @@ namespace KrillinStyles
 				// Make the session cookie essential
 				options.Cookie.IsEssential = true;
 			});
-
+			
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

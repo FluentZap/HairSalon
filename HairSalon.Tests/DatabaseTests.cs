@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using KrillinStyles.Database;
+using Microsoft.EntityFrameworkCore;
 
 namespace KrillinStylesTests
 {
+
 	[TestClass]
 	public class DatabaseTests
-	{		
+	{
 
 		[TestMethod]
 		public void Test_Database_Stylist_UserExists()

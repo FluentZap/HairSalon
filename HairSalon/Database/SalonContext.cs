@@ -7,11 +7,19 @@ namespace KrillinStyles.Database
 {
 	public class SalonContext : DbContext
 	{
+		public SalonContext()
+		{ }
+		
+		public SalonContext(DbContextOptions<SalonContext> options)
+			: base(options)
+		{ }
+
 		public DbSet<Client> Clients { get; set; }
 		public DbSet<Stylist> Stylists { get; set; }
 		public DbSet<Specialty> Specialties { get; set; }
 		public DbSet<StylistSpecialty> StylistSpecialties { get; set; }
 
+		
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
 			optionsBuilder.UseMySQL("server=localhost;database=todd_aden;user=root;password=root;port=3306;");

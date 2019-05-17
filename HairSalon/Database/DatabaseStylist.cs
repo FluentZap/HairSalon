@@ -15,7 +15,7 @@ namespace KrillinStyles.Database
 			{
 				var stylist = db.Stylists.Where(b => b.Id == id).FirstOrDefault();
 				return stylist != null;
-			}			
+			}
 		}
 
 		public static bool StylistExists(string login_name)
