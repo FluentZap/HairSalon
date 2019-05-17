@@ -7,21 +7,6 @@ namespace KrillinStyles.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Clients",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("MySQL:AutoIncrement", true),
-                    Name = table.Column<string>(nullable: true),
-                    Phone_number = table.Column<string>(nullable: true),
-                    Alt_phone_number = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Clients", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Specialties",
                 columns: table => new
                 {
@@ -40,7 +25,6 @@ namespace KrillinStyles.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySQL:AutoIncrement", true),
-                    ClientId = table.Column<int>(nullable: true),
                     Session_id = table.Column<string>(nullable: true),
                     Login_name = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: true),
@@ -49,10 +33,26 @@ namespace KrillinStyles.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Stylists", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Clients",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySQL:AutoIncrement", true),
+                    Name = table.Column<string>(nullable: true),
+                    StylistId = table.Column<int>(nullable: true),
+                    Phone_number = table.Column<string>(nullable: true),
+                    Alt_phone_number = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Clients", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Stylists_Clients_ClientId",
-                        column: x => x.ClientId,
-                        principalTable: "Clients",
+                        name: "FK_Clients_Stylists_StylistId",
+                        column: x => x.StylistId,
+                        principalTable: "Stylists",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -82,9 +82,9 @@ namespace KrillinStyles.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Stylists_ClientId",
-                table: "Stylists",
-                column: "ClientId");
+                name: "IX_Clients_StylistId",
+                table: "Clients",
+                column: "StylistId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StylistSpecialties_SpecialtyId",
@@ -95,6 +95,9 @@ namespace KrillinStyles.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Clients");
+
+            migrationBuilder.DropTable(
                 name: "StylistSpecialties");
 
             migrationBuilder.DropTable(
@@ -102,9 +105,6 @@ namespace KrillinStyles.Migrations
 
             migrationBuilder.DropTable(
                 name: "Stylists");
-
-            migrationBuilder.DropTable(
-                name: "Clients");
         }
     }
 }

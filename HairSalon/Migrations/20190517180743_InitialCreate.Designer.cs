@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KrillinStyles.Migrations
 {
     [DbContext(typeof(SalonContext))]
-    [Migration("20190517173928_InitialCreate")]
+    [Migration("20190517180743_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,7 +29,11 @@ namespace KrillinStyles.Migrations
 
                     b.Property<string>("Phone_number");
 
+                    b.Property<int?>("StylistId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("StylistId");
 
                     b.ToTable("Clients");
                 });
@@ -51,8 +55,6 @@ namespace KrillinStyles.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("ClientId");
-
                     b.Property<string>("Login_name");
 
                     b.Property<string>("Name");
@@ -62,8 +64,6 @@ namespace KrillinStyles.Migrations
                     b.Property<string>("Session_id");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ClientId");
 
                     b.ToTable("Stylists");
                 });
@@ -81,11 +81,11 @@ namespace KrillinStyles.Migrations
                     b.ToTable("StylistSpecialties");
                 });
 
-            modelBuilder.Entity("KrillinStyles.Database.Stylist", b =>
+            modelBuilder.Entity("KrillinStyles.Database.Client", b =>
                 {
-                    b.HasOne("KrillinStyles.Database.Client", "Client")
+                    b.HasOne("KrillinStyles.Database.Stylist", "Stylist")
                         .WithMany()
-                        .HasForeignKey("ClientId");
+                        .HasForeignKey("StylistId");
                 });
 
             modelBuilder.Entity("KrillinStyles.Database.StylistSpecialty", b =>

@@ -28,6 +28,7 @@ namespace KrillinStyles.Database
 	{
 		public int Id { get; set; }
 		public string Name { get; set; }
+		public Stylist Stylist { get; set; }
 		public string Phone_number { get; set; }
 		public string Alt_phone_number { get; set; }
 	}
@@ -44,8 +45,7 @@ namespace KrillinStyles.Database
 
 	public class Stylist
 	{
-		public int Id { get; set; }
-		public Client Client { get; set; }
+		public int Id { get; set; }		
 		public string Session_id { get; set; }
 		public string Login_name { get; set; }
 		public string Password { get; set; }

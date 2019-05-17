@@ -19,9 +19,9 @@ namespace KrillinStyles.Controllers
 
 		public IActionResult Index()
 		{
-			if (!DB.UserCheckBySessionId(HttpContext.Session.Id)) { return RedirectToAction("index", "home"); } //check for logout
+			if (!DB.StylistCheckBySessionId(HttpContext.Session.Id)) { return RedirectToAction("index", "home"); } //check for logout
 			ViewBag.LoggedIn = true;
-			Stylist user = DB.UserGetBySessionId(HttpContext.Session.Id);
+			Stylist user = DB.StylistGetBySessionId(HttpContext.Session.Id);
 			ViewBag.ClientList = DB.ClientGetAll();			
 			ViewBag.StylistName = user.Name;
 			return View();
@@ -29,24 +29,24 @@ namespace KrillinStyles.Controllers
 
 		public IActionResult New(int message)
 		{
-			if (!DB.UserCheckBySessionId(HttpContext.Session.Id)) { return RedirectToAction("index", "home"); } //check for logout
+			if (!DB.StylistCheckBySessionId(HttpContext.Session.Id)) { return RedirectToAction("index", "home"); } //check for logout
 			ViewBag.LoggedIn = true;
 			ViewBag.message = ErrorCodeMessages.FromCode(message);
-			List<Stylist> users = DB.UserGetAll();
+			List<Stylist> users = DB.StylistGetAll();
 			ViewBag.UserList = users;
 			return View();
 		}
 		
 		public IActionResult Show(string userId)
 		{
-			if (!DB.UserCheckBySessionId(HttpContext.Session.Id)) { return RedirectToAction("index", "home"); } //check for logout						
+			if (!DB.StylistCheckBySessionId(HttpContext.Session.Id)) { return RedirectToAction("index", "home"); } //check for logout						
 			ViewBag.LoggedIn = true;
-			if (DB.UserExistsById(userId))
+			if (DB.StylistExistsById(int.Parse(userId)))
 			{
-				Stylist viewUser = DB.UserGetById(userId);
-				Stylist user = DB.UserGetBySessionId(HttpContext.Session.Id);
+				Stylist viewUser = DB.StylistGetById(int.Parse(userId));
+				Stylist user = DB.StylistGetBySessionId(HttpContext.Session.Id);
 				ViewBag.StylistName = user.Name;
-				ViewBag.ClientList = DB.ClientGetAllFromUser(userId);
+				ViewBag.ClientList = DB.ClientGetAllFromUser(int.Parse(userId));
 				ViewBag.User = viewUser;
 				//ViewBag.message = ErrorCodeMessages.FromCode(message);
 				return View();
@@ -64,7 +64,7 @@ namespace KrillinStyles.Controllers
 			{
 				return RedirectToAction("new", new { message = 3 });
 			}
-			DB.ClientCreate(stylist_id, client_name, phone_number, alt_phone_number);
+			DB.ClientCreate(int.Parse(stylist_id), client_name, phone_number, alt_phone_number);
 			return RedirectToAction("index");
 		}
 

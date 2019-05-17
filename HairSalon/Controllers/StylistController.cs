@@ -19,10 +19,10 @@ namespace KrillinStyles.Controllers
 
 		public IActionResult Index()
 		{
-			if (!DB.UserCheckBySessionId(HttpContext.Session.Id)) { return RedirectToAction("index", "home"); } //check for logout
+			if (!DB.StylistCheckBySessionId(HttpContext.Session.Id)) { return RedirectToAction("index", "home"); } //check for logout
 			ViewBag.LoggedIn = true;
-			Stylist user = DB.UserGetBySessionId(HttpContext.Session.Id);
-			List<Stylist> users = DB.UserGetAll();
+			Stylist user = DB.StylistGetBySessionId(HttpContext.Session.Id);
+			List<Stylist> users = DB.StylistGetAll();
 			ViewBag.UserList = users;
 			ViewBag.StylistName = user.Name;
 			return View();
@@ -30,7 +30,18 @@ namespace KrillinStyles.Controllers
 
 		public IActionResult New(int message)
 		{
-			if (!DB.UserCheckBySessionId(HttpContext.Session.Id)) { return RedirectToAction("index", "home"); } //check for logout
+			if (!DB.StylistCheckBySessionId(HttpContext.Session.Id)) //check for logout
+			{
+				if (DB.StylistGetAll().Count > 0) //no users initiate administrator login 
+				{
+					return RedirectToAction("index", "home");					
+				}
+				else
+				{
+					ViewBag.message = ErrorCodeMessages.FromCode(4);
+					return View();
+				}
+			}
 			ViewBag.LoggedIn = true;
 			ViewBag.message = ErrorCodeMessages.FromCode(message);
 			return View();
@@ -39,14 +50,14 @@ namespace KrillinStyles.Controllers
 
 		public IActionResult Show(string userId)
 		{
-			if (!DB.UserCheckBySessionId(HttpContext.Session.Id)) { return RedirectToAction("index", "home"); } //check for logout						
+			if (!DB.StylistCheckBySessionId(HttpContext.Session.Id)) { return RedirectToAction("index", "home"); } //check for logout						
 			ViewBag.LoggedIn = true;
-			if (DB.UserExistsById(userId))
+			if (DB.StylistExistsById(int.Parse(userId)))
 			{
-				Stylist viewUser = DB.UserGetById(userId);
-				Stylist user = DB.UserGetBySessionId(HttpContext.Session.Id);
+				Stylist viewUser = DB.StylistGetById(int.Parse(userId));
+				Stylist user = DB.StylistGetBySessionId(HttpContext.Session.Id);
 				ViewBag.StylistName = user.Name;
-				ViewBag.ClientList = DB.ClientGetAllFromUser(userId);
+				ViewBag.ClientList = DB.ClientGetAllFromUser(int.Parse(userId));
 				ViewBag.User = viewUser;
 				//ViewBag.message = ErrorCodeMessages.FromCode(message);
 				return View();
@@ -66,9 +77,9 @@ namespace KrillinStyles.Controllers
 			{
 				return RedirectToAction("new", new { message = 2 });
 			}
-			if (!DB.UserExists(login_name))
+			if (!DB.StylistExists(login_name))
 			{
-				DB.UserCreate(login_name, HttpContext.Session.Id, name, password);
+				DB.StylistCreate(login_name, "", name, password);
 				return RedirectToAction("index");
 			}
 			else

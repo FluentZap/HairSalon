@@ -17,6 +17,8 @@ namespace KrillinStyles.Controllers
 					return "All fields must be completed";
 				case 3:
 					return "Please enter a name and a phone number";
+				case 4:
+					return "First user setup, please enter administrator details";
 				default:
 					break;
 			}

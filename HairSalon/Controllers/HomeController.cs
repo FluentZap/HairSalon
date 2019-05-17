@@ -18,7 +18,11 @@ namespace KrillinStyles.Controllers
 
 		public IActionResult Index(int message)
         {
-			if (DB.UserCheckBySessionId(HttpContext.Session.Id)) { return RedirectToAction("index", "stylist"); } //check for login			
+			if (DB.StylistCheckBySessionId(HttpContext.Session.Id)) { return RedirectToAction("index", "stylist"); } //check for login			
+			if (DB.StylistGetAll().Count == 0)
+			{
+				return RedirectToAction("new", "stylist");
+			}
 			ViewBag.LoggedIn = false;
 			ViewBag.message = ErrorCodeMessages.FromCode(message);
 			return View();
@@ -28,7 +32,7 @@ namespace KrillinStyles.Controllers
 		{
 			InitSession();
 			login_name.ToLower();
-			bool loggedIn = DB.UserLogin(login_name, password, HttpContext.Session.Id);
+			bool loggedIn = DB.StylistLogin(login_name, password, HttpContext.Session.Id);
 			if (loggedIn)
 			{
 				return RedirectToAction("index", "stylist");
@@ -41,12 +45,12 @@ namespace KrillinStyles.Controllers
 
 		public IActionResult Destroy()
 		{
-			if (!DB.UserCheckBySessionId(HttpContext.Session.Id))
+			if (!DB.StylistCheckBySessionId(HttpContext.Session.Id))
 			{
 				ViewBag.LoggedIn = false;
 				return RedirectToAction("index", "home");
 			}
-			DB.UserLogout(HttpContext.Session.Id);
+			DB.StylistLogout(HttpContext.Session.Id);
 			ViewBag.LoggedIn = false;
 			return RedirectToAction("index", "home");
 		}

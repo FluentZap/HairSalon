@@ -9,174 +9,109 @@ namespace KrillinStyles.Database
 	public partial class DB
 	{
 
-		public static bool UserExistsById(string id)
+		public static bool StylistExistsById(int id)
 		{
-			MySqlConnection conn = DB.Connection();
-			conn.Open();
-			MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-			cmd.CommandText = @"SELECT * FROM stylist WHERE id = @id;";
-			cmd.Parameters.AddWithValue("@id", id);
-			MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
-			bool exists = rdr.Read();
-			DB.Close(conn);
-			return exists;
+			using (var db = new SalonContext())
+			{
+				var stylist = db.Stylists.Where(b => b.Id == id).FirstOrDefault();
+				return stylist != null;
+			}			
 		}
 
-		public static bool UserExists(string login_name)
+		public static bool StylistExists(string login_name)
 		{
-			MySqlConnection conn = DB.Connection();
-			conn.Open();
-			MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-			cmd.CommandText = @"SELECT * FROM stylist WHERE login_name = @login_name;";
-			cmd.Parameters.AddWithValue("@login_name", login_name);
-			MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
-			bool exists = rdr.Read();
-			DB.Close(conn);
-			return exists;
+			using (var db = new SalonContext())
+			{
+				var stylist = db.Stylists.Where(b => b.Login_name == login_name).FirstOrDefault();
+				return stylist != null;
+			}
 		}
 
-		public static bool UserCheckBySessionId(string session_id)
+		public static bool StylistCheckBySessionId(string session_id)
 		{
-			MySqlConnection conn = DB.Connection();
-			conn.Open();
-			MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-			cmd.CommandText = @"SELECT * FROM stylist WHERE session_id = @session_id;";
-			cmd.Parameters.AddWithValue("@session_id", session_id);
-			MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
-			bool exists = rdr.Read();
-
-			DB.Close(conn);
-			return exists;
+			using (var db = new SalonContext())
+			{
+				var stylist = db.Stylists.Where(b => b.Session_id == session_id).FirstOrDefault();
+				return stylist != null;
+			}
 		}		
 
-		public static void UserUpdateSessionId(string login_name, string session_id)
+		public static void StylistUpdateSessionId(string login_name, string session_id)
 		{
-			MySqlConnection conn = DB.Connection();
-			conn.Open();
-			MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-			cmd.CommandText = @"UPDATE stylist SET session_id = @session_id WHERE login_name = @login_name;";
-			cmd.Parameters.AddWithValue("@session_id", session_id);
-			cmd.Parameters.AddWithValue("@login_name", login_name);
-			cmd.ExecuteNonQuery();
-			DB.Close(conn);
-		}
-
-		public static void UserLogout(string session_id)
-		{
-			MySqlConnection conn = DB.Connection();
-			conn.Open();
-			MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-			cmd.CommandText = @"UPDATE stylist SET session_id = '' WHERE session_id = @session_id;";
-			cmd.Parameters.AddWithValue("@session_id", session_id);
-			cmd.ExecuteNonQuery();
-			DB.Close(conn);
-		}
-
-
-		public static long UserCreate(string login_name, string session_id, string name, string password)
-		{
-			MySqlConnection conn = DB.Connection();
-			conn.Open();
-			MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-			cmd.CommandText = @"INSERT INTO stylist (session_id, login_name, name, password) VALUES (@session_id, @login_name, @name, @password);";
-			cmd.Parameters.AddWithValue("@session_id", session_id);
-			cmd.Parameters.AddWithValue("@login_name", login_name);
-			cmd.Parameters.AddWithValue("@name", name);
-			cmd.Parameters.AddWithValue("@password", password);
-			cmd.ExecuteNonQuery();
-			DB.Close(conn);
-			return cmd.LastInsertedId;
-		}
-
-		public static List<Stylist> UserGetAll()
-		{
-			List<Stylist> users = new List<Stylist>();
-			MySqlConnection conn = DB.Connection();
-			conn.Open();
-			MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-			cmd.CommandText = @"SELECT * FROM stylist;";			
-			MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
-			while (rdr.Read())
+			using (var db = new SalonContext())
 			{
-				Stylist user = new Stylist
-				{
-					Id = rdr.GetInt32(0),
-					Session_id = rdr.GetString(1),
-					Login_name = rdr.GetString(2),
-					Name = rdr.GetString(3),
-					Password = rdr.GetString(4)
-				};
-				users.Add(user);
-			}						
-			DB.Close(conn);
-			return users;
+				var stylist = db.Stylists.Where(b => b.Login_name == login_name).FirstOrDefault();
+				stylist.Session_id = session_id;
+				db.SaveChanges();
+			}			
 		}
 
-		public static Stylist UserGetByName(string login_name)
+		public static void StylistLogout(string session_id)
 		{
-			Stylist user = new Stylist();
-			MySqlConnection conn = DB.Connection();
-			conn.Open();
-			MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-			cmd.CommandText = @"SELECT * FROM stylist WHERE login_name = @login_name;";
-			cmd.Parameters.AddWithValue("@login_name", login_name);
-			MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
-			rdr.Read();
-			user.Id = rdr.GetInt32(0);
-			user.Session_id = rdr.GetString(1);
-			user.Login_name = rdr.GetString(2);
-			user.Name = rdr.GetString(3);
-			user.Password = rdr.GetString(4);
-			DB.Close(conn);
-			return user;
-		}
-
-		public static Stylist UserGetBySessionId(string session_id)
-		{
-			Stylist user = new Stylist();
-			MySqlConnection conn = DB.Connection();
-			conn.Open();
-			MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-			cmd.CommandText = @"SELECT * FROM stylist WHERE session_id = @session_id;";
-			cmd.Parameters.AddWithValue("@session_id", session_id);
-			MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
-			rdr.Read();
-			user.Id = rdr.GetInt32(0);
-			user.Session_id = rdr.GetString(1);
-			user.Login_name = rdr.GetString(2);
-			user.Name = rdr.GetString(3);
-			user.Password = rdr.GetString(4);
-			DB.Close(conn);
-			return user;
-		}
-
-		public static Stylist UserGetById(string id)
-		{
-			Stylist user = new Stylist();
-			MySqlConnection conn = DB.Connection();
-			conn.Open();
-			MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-			cmd.CommandText = @"SELECT * FROM stylist WHERE id = @id;";
-			cmd.Parameters.AddWithValue("@id", id);
-			MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
-			rdr.Read();
-			user.Id = rdr.GetInt32(0);
-			user.Session_id = rdr.GetString(1);
-			user.Login_name = rdr.GetString(2);
-			user.Name = rdr.GetString(3);
-			user.Password = rdr.GetString(4);
-			DB.Close(conn);
-			return user;
-		}
-
-		public static bool UserLogin(string login_name, string password, string session_id)
-		{
-			if (UserExists(login_name))
+			using (var db = new SalonContext())
 			{
-				Stylist user = UserGetByName(login_name);
+				var stylist = db.Stylists.Where(b => b.Session_id == session_id).FirstOrDefault();
+				stylist.Session_id = "";
+				db.SaveChanges();
+			}
+		}
+
+
+		public static long StylistCreate(string login_name, string session_id, string name, string password)
+		{
+			Stylist stylist = new Stylist { Login_name = login_name, Session_id = session_id, Name = name, Password = password };
+			using (var db = new SalonContext())
+			{
+				db.Stylists.Add(stylist);
+				db.SaveChanges();
+			}
+			return stylist.Id;
+		}
+
+		public static List<Stylist> StylistGetAll()
+		{
+			using (var db = new SalonContext())
+			{
+				var stylists = db.Stylists.ToList();
+				return stylists;
+			}			
+		}
+
+		public static Stylist StylistGetByName(string login_name)
+		{
+			using (var db = new SalonContext())
+			{
+				var stylist = db.Stylists.Where(b => b.Login_name == login_name).FirstOrDefault();
+				return stylist;
+			}			
+		}
+
+		public static Stylist StylistGetBySessionId(string session_id)
+		{
+			using (var db = new SalonContext())
+			{
+				var stylist = db.Stylists.Where(b => b.Session_id == session_id).FirstOrDefault();
+				return stylist;
+			}
+		}
+
+		public static Stylist StylistGetById(int id)
+		{
+			using (var db = new SalonContext())
+			{
+				var stylist = db.Stylists.Where(b => b.Id == id).FirstOrDefault();
+				return stylist;
+			}			
+		}
+
+		public static bool StylistLogin(string login_name, string password, string session_id)
+		{
+			if (StylistExists(login_name))
+			{
+				Stylist user = StylistGetByName(login_name);
 				if (user.Password == password)
 				{
-					UserUpdateSessionId(user.Login_name, session_id);
+					StylistUpdateSessionId(user.Login_name, session_id);
 					return true;
 				}
 				else

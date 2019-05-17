@@ -13,22 +13,22 @@ namespace KrillinStylesTests
 		[TestMethod]
 		public void Test_Database_Stylist_UserExists()
 		{
-			Assert.IsTrue(DB.UserExists("root"));
-			Assert.IsFalse(DB.UserExists("sillyPants"));
+			Assert.IsTrue(DB.StylistExists("root"));
+			Assert.IsFalse(DB.StylistExists("sillyPants"));
 		}
 
 		[TestMethod]
 		public void Test_Database_Stylist_UserExistsById()
 		{
-			Assert.IsTrue(DB.UserExistsById("1"));
-			Assert.IsFalse(DB.UserExistsById("74579878178979823497898234"));
+			Assert.IsTrue(DB.StylistExistsById(1));
+			Assert.IsFalse(DB.StylistExistsById(745779));
 		}
 
 		[TestMethod]
 		public void Test_Database_Stylist_UserCheckBySessionId()
 		{
-			Assert.IsTrue(DB.UserCheckBySessionId("820add4c-793b-c1b1-611c-bbbe5255d64b"));
-			Assert.IsFalse(DB.UserCheckBySessionId("Like a not good Session Id"));
+			Assert.IsTrue(DB.StylistCheckBySessionId("820add4c-793b-c1b1-611c-bbbe5255d64b"));
+			Assert.IsFalse(DB.StylistCheckBySessionId("Like a not good Session Id"));
 		}
 
 
