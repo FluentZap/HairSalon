@@ -37,14 +37,14 @@ namespace KrillinStyles.Database
 				Client client = new Client
 				{
 					Id = rdr.GetInt32(0),
-					Stylist_id = rdr.GetInt32(1),
+					//Stylist_id = rdr.GetInt32(1),
 					Name = rdr.GetString(2),
 					Phone_number = rdr.GetString(3),					
 					Alt_phone_number = rdr.IsDBNull(4) ? "" : rdr.GetString(4)
 				};
 				
-				client.Stylist_id = rdr.GetInt32(5);
-				client.Stylist_Name = rdr.GetString(7);
+				//client.Stylist_id = rdr.GetInt32(5);
+				//client.Stylist_Name = rdr.GetString(7);
 				clients.Add(client);
 			}
 			DB.Close(conn);
@@ -65,7 +65,7 @@ namespace KrillinStyles.Database
 				Client client = new Client
 				{
 					Id = rdr.GetInt32(0),
-					Stylist_id = rdr.GetInt32(1),
+					//Stylist_id = rdr.GetInt32(1),
 					Name = rdr.GetString(2),
 					Phone_number = rdr.GetString(3),
 					Alt_phone_number = rdr.IsDBNull(4) ? "" : rdr.GetString(4)

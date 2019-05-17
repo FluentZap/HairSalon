@@ -8,11 +8,7 @@ namespace KrillinStylesTests
 {
 	[TestClass]
 	public class DatabaseTests
-	{
-		public DatabaseTests()
-		{
-			DBConfiguration.ConnectionString = "server=localhost;user id=root;password=root;port=3306;database=todd_aden_test;";
-		}
+	{		
 
 		[TestMethod]
 		public void Test_Database_Stylist_UserExists()
