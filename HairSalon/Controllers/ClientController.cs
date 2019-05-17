@@ -21,7 +21,7 @@ namespace KrillinStyles.Controllers
 		{
 			if (!DB.UserCheckBySessionId(HttpContext.Session.Id)) { return RedirectToAction("index", "home"); } //check for logout
 			ViewBag.LoggedIn = true;
-			User user = DB.UserGetBySessionId(HttpContext.Session.Id);
+			Stylist user = DB.UserGetBySessionId(HttpContext.Session.Id);
 			ViewBag.ClientList = DB.ClientGetAll();			
 			ViewBag.StylistName = user.Name;
 			return View();
@@ -32,7 +32,7 @@ namespace KrillinStyles.Controllers
 			if (!DB.UserCheckBySessionId(HttpContext.Session.Id)) { return RedirectToAction("index", "home"); } //check for logout
 			ViewBag.LoggedIn = true;
 			ViewBag.message = ErrorCodeMessages.FromCode(message);
-			List<User> users = DB.UserGetAll();
+			List<Stylist> users = DB.UserGetAll();
 			ViewBag.UserList = users;
 			return View();
 		}
@@ -43,8 +43,8 @@ namespace KrillinStyles.Controllers
 			ViewBag.LoggedIn = true;
 			if (DB.UserExistsById(userId))
 			{
-				User viewUser = DB.UserGetById(userId);
-				User user = DB.UserGetBySessionId(HttpContext.Session.Id);
+				Stylist viewUser = DB.UserGetById(userId);
+				Stylist user = DB.UserGetBySessionId(HttpContext.Session.Id);
 				ViewBag.StylistName = user.Name;
 				ViewBag.ClientList = DB.ClientGetAllFromUser(userId);
 				ViewBag.User = viewUser;

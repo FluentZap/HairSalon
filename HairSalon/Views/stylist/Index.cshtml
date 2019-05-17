@@ -13,7 +13,7 @@
 	<div class="container clientBG">
 		@if (ViewBag.UserList != null)
 		{
-			foreach (User item in ViewBag.UserList)
+			foreach (Stylist item in ViewBag.UserList)
 			{
 				<p><a asp-controller="stylist" asp-action="show" asp-route-userId="@item.Id"> @item.Name </a></p>
 			}

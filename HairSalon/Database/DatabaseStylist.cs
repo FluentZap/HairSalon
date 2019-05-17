@@ -88,9 +88,9 @@ namespace KrillinStyles.Database
 			return cmd.LastInsertedId;
 		}
 
-		public static List<User> UserGetAll()
+		public static List<Stylist> UserGetAll()
 		{
-			List<User> users = new List<User>();
+			List<Stylist> users = new List<Stylist>();
 			MySqlConnection conn = DB.Connection();
 			conn.Open();
 			MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
@@ -98,7 +98,7 @@ namespace KrillinStyles.Database
 			MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
 			while (rdr.Read())
 			{
-				User user = new User
+				Stylist user = new Stylist
 				{
 					Id = rdr.GetInt32(0),
 					Session_id = rdr.GetString(1),
@@ -112,9 +112,9 @@ namespace KrillinStyles.Database
 			return users;
 		}
 
-		public static User UserGetByName(string login_name)
+		public static Stylist UserGetByName(string login_name)
 		{
-			User user = new User();
+			Stylist user = new Stylist();
 			MySqlConnection conn = DB.Connection();
 			conn.Open();
 			MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
@@ -131,9 +131,9 @@ namespace KrillinStyles.Database
 			return user;
 		}
 
-		public static User UserGetBySessionId(string session_id)
+		public static Stylist UserGetBySessionId(string session_id)
 		{
-			User user = new User();
+			Stylist user = new Stylist();
 			MySqlConnection conn = DB.Connection();
 			conn.Open();
 			MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
@@ -150,9 +150,9 @@ namespace KrillinStyles.Database
 			return user;
 		}
 
-		public static User UserGetById(string id)
+		public static Stylist UserGetById(string id)
 		{
-			User user = new User();
+			Stylist user = new Stylist();
 			MySqlConnection conn = DB.Connection();
 			conn.Open();
 			MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
@@ -173,7 +173,7 @@ namespace KrillinStyles.Database
 		{
 			if (UserExists(login_name))
 			{
-				User user = UserGetByName(login_name);
+				Stylist user = UserGetByName(login_name);
 				if (user.Password == password)
 				{
 					UserUpdateSessionId(user.Login_name, session_id);

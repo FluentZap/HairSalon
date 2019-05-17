@@ -1,6 +1,6 @@
 ﻿namespace KrillinStyles
 {
-	public class User
+	public class Stylist
 	{
 		public int Id {get; set;}
 		public string Session_id { get; set; }
