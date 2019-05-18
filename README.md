@@ -10,7 +10,7 @@ https://github.com/FluentZap/WordCounter
 * You must have access to a MYSQL database
 * Set the setting in the Database.cs file to point to your MYSQL
 * Unit tests have a custom option string in TestSetup() that point to the test database
-* To have Entity Framework create the database for you run based on the connection string navigate to ```KrillinStyles/``` and run ```dotnet ef database update```
+* To have Entity Framework create the database for you based on the connection string navigate to ```KrillinStyles/``` and run ```dotnet ef database update```
 * To create the database and tables using SQL input the following commands below. The commands will also drop any tables if they already exist.
 
 ```sql
