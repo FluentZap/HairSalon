@@ -9,19 +9,37 @@
 	<h4 class="text-danger">@ViewBag.message</h4>
 
 	<h3>Clients</h3>
-
+	<a class="btn-danger btn" asp-controller="client" asp-action="destroyAll"> Clear All </a>
 	<div class="container clientBG">
+		<hr>
 		@if (ViewBag.ClientList != null)
 		{
-			foreach (Client item in ViewBag.ClientList)
+			@foreach (Client item in ViewBag.ClientList)
 			{
-				//<p>Stylist: @item.Stylist_Name</p>
-				<p>Name: @item.Name</p>
-				<p>Phone: @item.Phone_number</p>
-				if (item.Alt_phone_number != "")
-				{
-					<p>Alternate Phone Number: @item.Alt_phone_number</p>
-				}
+				<div class="row justify-content-center align-items-center">
+					<div class="col-md-3 text-left">
+						@if (@item.Stylist == null)
+						{
+							<p>Stylist: Not Assigned</p>
+						}
+						else
+						{
+							<p><a asp-controller="stylist" asp-action="show" asp-route-userId="@item.Stylist.Id"> <b>Stylist</b>: @item.Stylist.Name </a></p>
+						}
+						<p><b>Client Name</b>: @item.Name</p>
+					</div>
+					<div class="col-md-5 text-left">
+						<p><b>Client Phone</b>: @item.Phone_number</p>
+						@if (item.Alt_phone_number != "")
+						{
+							<p><b>Client Alt Phone Number</b>: @item.Alt_phone_number</p>
+						}
+					</div>
+					<div class="col-md-2 text-left">
+						<a class="btn-primary btn" asp-controller="client" asp-action="update" asp-route-clientId="@item.Id"> Edit </a>
+						<a class="btn-danger btn" asp-controller="client" asp-action="destroy" asp-route-clientId="@item.Id"> Remove </a>
+					</div>
+				</div>
 				<hr>
 			}
 		}

@@ -14,6 +14,7 @@
     <Watch Remove="Views\client\Index.cshtml" />
     <Watch Remove="Views\client\New.cshtml" />
     <Watch Remove="Views\client\Show.cshtml" />
+    <Watch Remove="Views\stylist\Edit.cshtml" />
     <Watch Remove="Views\stylist\Index.cshtml" />
     <Watch Remove="Views\stylist\Show.cshtml" />
     <PackageReference Include="Microsoft.AspNetCore.App" />

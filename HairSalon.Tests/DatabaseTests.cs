@@ -12,21 +12,21 @@ namespace KrillinStylesTests
 	public class DatabaseTests
 	{
 
-		public static DbContextOptions<SalonContext> Options { get; set; }
-
 		[TestInitialize]
 		public void TestSetup()
 		{
 			var optionsBuilder = new DbContextOptionsBuilder<SalonContext>();
 			optionsBuilder.UseMySQL("server=localhost;database=todd_aden_test;user=root;password=root;port=3306;");
-			Options = optionsBuilder.Options;
 			DB.Options = optionsBuilder.Options;
 		}
 
 		[TestCleanup]
 		public void TestCleanup()
 		{
-			using (var db = new SalonContext(Options))
+			var optionsBuilder = new DbContextOptionsBuilder<SalonContext>();
+			optionsBuilder.UseMySQL("server=localhost;database=todd_aden_test;user=root;password=root;port=3306;");
+
+			using (var db = new SalonContext(optionsBuilder.Options))
 			{
 				db.Stylists.RemoveRange(db.Stylists.ToArray());
 				db.Clients.RemoveRange(db.Clients.ToArray());

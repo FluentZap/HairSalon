@@ -12,7 +12,7 @@
 
 
 		<label for="stylist_id">Primary Stylist</label>
-		<select class="form-control" name="stylist_id">
+		<select class="form-control" name="stylist_id">			
 			@foreach (Stylist item in ViewBag.UserList)
 			{				
 				<option value="@item.Id">@item.Name</option>

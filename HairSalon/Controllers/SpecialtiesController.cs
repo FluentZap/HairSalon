@@ -9,24 +9,18 @@ using KrillinStyles.Database;
 
 namespace KrillinStyles.Controllers
 {
-	public class StylistController : Controller
+	public class SpecialtiesController : Controller
 	{
-
-		public void InitSession()
-		{			
-			HttpContext.Session.Set("Id", new Byte[0]);
-		}
-
 		public IActionResult Index()
 		{
 			if (!DB.StylistCheckBySessionId(HttpContext.Session.Id)) { return RedirectToAction("index", "home"); } //check for logout
 			ViewBag.LoggedIn = true;
-			Stylist user = DB.StylistGetBySessionId(HttpContext.Session.Id);
-			List<Stylist> users = DB.StylistGetAll();
-			ViewBag.UserList = users;
-			ViewBag.StylistName = user.Name;
+			//Stylist user = DB.StylistGetBySessionId(HttpContext.Session.Id);
+			//List<Specialty> specialties = 
+			//ViewBag.UserList = users;
+			//ViewBag.StylistName = user.Name;
 			return View();
-		}			
+		}
 
 		public IActionResult New(int message)
 		{
@@ -34,7 +28,7 @@ namespace KrillinStyles.Controllers
 			{
 				if (DB.StylistGetAll().Count > 0) //no users initiate administrator login 
 				{
-					return RedirectToAction("index", "home");					
+					return RedirectToAction("index", "home");
 				}
 				else
 				{
@@ -46,7 +40,7 @@ namespace KrillinStyles.Controllers
 			ViewBag.message = ErrorCodeMessages.FromCode(message);
 			return View();
 		}
-		
+
 
 		public IActionResult Show(string userId)
 		{
@@ -71,8 +65,7 @@ namespace KrillinStyles.Controllers
 
 		public IActionResult Create(string login_name, string name, string password)
 		{
-			if (!DB.StylistCheckBySessionId(HttpContext.Session.Id) && DB.StylistGetAll().Count > 0) { return RedirectToAction("index", "home"); } //check for logout
-			InitSession();
+			//InitSession();
 			login_name.ToLower();
 			if (login_name == null || name == null || password == null)
 			{
@@ -87,24 +80,6 @@ namespace KrillinStyles.Controllers
 			{
 				return RedirectToAction("new", new { message = 1 });
 			}
-		}
-
-
-		public IActionResult Destroy(string userId)
-		{
-			if (!DB.StylistCheckBySessionId(HttpContext.Session.Id)) { return RedirectToAction("index", "home"); } //check for logout
-			if (!DB.StylistExists(userId))
-			{
-				DB.StylistRemove(int.Parse(userId));
-			}
-			return RedirectToAction("index");
-		}
-
-		public IActionResult DestroyAll()
-		{
-			if (!DB.StylistCheckBySessionId(HttpContext.Session.Id)) { return RedirectToAction("index", "home"); } //check for logout
-			DB.StylistRemoveAll();			
-			return RedirectToAction("index");
 		}
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

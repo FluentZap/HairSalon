@@ -33,13 +33,14 @@ namespace KrillinStyles.Controllers
 			ViewBag.LoggedIn = true;
 			ViewBag.message = ErrorCodeMessages.FromCode(message);
 			List<Stylist> users = DB.StylistGetAll();
+			users = users.OrderBy(u => u.Name).ToList();
 			ViewBag.UserList = users;
 			return View();
 		}
 		
 		public IActionResult Show(string userId)
 		{
-			if (!DB.StylistCheckBySessionId(HttpContext.Session.Id)) { return RedirectToAction("index", "home"); } //check for logout						
+			if (!DB.StylistCheckBySessionId(HttpContext.Session.Id)) { return RedirectToAction("index", "home"); } //check for logout
 			ViewBag.LoggedIn = true;
 			if (DB.StylistExistsById(int.Parse(userId)))
 			{
@@ -59,13 +60,40 @@ namespace KrillinStyles.Controllers
 		}
 
 		public IActionResult Create(string client_name, string phone_number, string alt_phone_number, string stylist_id)
-		{						
+		{
+			if (!DB.StylistCheckBySessionId(HttpContext.Session.Id)) { return RedirectToAction("index", "home"); } //check for logout
 			if (client_name == null || phone_number == null || stylist_id == null)
 			{
 				return RedirectToAction("new", new { message = 3 });
 			}
 			DB.ClientCreate(int.Parse(stylist_id), client_name, phone_number, alt_phone_number);
 			return RedirectToAction("index");
+		}
+
+
+		public IActionResult Destroy(string clientId)
+		{
+			if (!DB.StylistCheckBySessionId(HttpContext.Session.Id)) { return RedirectToAction("index", "home"); } //check for logout
+			if (DB.ClientExistsById(int.Parse(clientId)))
+			{
+				DB.ClientRemove(int.Parse(clientId));
+			}
+			return RedirectToAction("index");
+		}
+
+		public IActionResult DestroyAll(string stylistId)
+		{
+			if (!DB.StylistCheckBySessionId(HttpContext.Session.Id)) { return RedirectToAction("index", "home"); } //check for logout
+			if (stylistId != null)
+			{
+				DB.ClientRemoveAllFromUser(int.Parse(stylistId));
+				return RedirectToAction("index");
+			}
+			else
+			{
+				DB.ClientRemoveAll();
+				return RedirectToAction("index");
+			}			
 		}
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

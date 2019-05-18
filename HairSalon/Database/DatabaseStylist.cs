@@ -12,6 +12,14 @@ namespace KrillinStyles.Database
 
 		public static DbContextOptions<SalonContext> Options { get; set; }
 
+		static DB()
+		{
+			var optionsBuilder = new DbContextOptionsBuilder<SalonContext>();
+			optionsBuilder.UseMySQL("server=localhost;database=todd_aden;user=root;password=root;port=3306;");
+			Options = optionsBuilder.Options;
+		}
+
+
 		public static bool StylistExistsById(int id)
 		{
 			using (var db = new SalonContext(Options))
@@ -105,6 +113,24 @@ namespace KrillinStyles.Database
 				var stylist = db.Stylists.Where(b => b.Id == id).FirstOrDefault();
 				return stylist;
 			}			
+		}
+
+		public static void StylistRemove(int id)
+		{
+			using (var db = new SalonContext(Options))
+			{
+				db.Stylists.Remove(db.Stylists.Where(b => b.Id == id).FirstOrDefault());
+				db.SaveChanges();
+			}
+		}
+
+		public static void StylistRemoveAll()
+		{
+			using (var db = new SalonContext(Options))
+			{
+				db.Stylists.RemoveRange(db.Stylists.ToArray());
+				db.SaveChanges();
+			}
 		}
 
 		public static bool StylistLogin(string login_name, string password, string session_id)

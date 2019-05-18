@@ -10,12 +10,26 @@
 
 	<h3>Stylists</h3>
 
+	<a class="btn-danger btn" asp-controller="stylist" asp-action="destroyAll"> Clear All </a>
 	<div class="container clientBG">
+		<hr>
 		@if (ViewBag.UserList != null)
 		{
 			foreach (Stylist item in ViewBag.UserList)
 			{
-				<p><a asp-controller="stylist" asp-action="show" asp-route-userId="@item.Id"> @item.Name </a></p>
+
+				<div class="row justify-content-center align-items-center">
+					<div class="col-md-3 text-left">
+						<h5><a asp-controller="stylist" asp-action="show" asp-route-userId="@item.Id"> @item.Name </a></h5>
+					</div>
+
+					<div class="col-md-2 text-left">
+						<a class="btn-primary btn" asp-controller="stylist" asp-action="update" asp-route-userId="@item.Id"> Edit </a>
+						<a class="btn-danger btn" asp-controller="stylist" asp-action="destroy" asp-route-userId="@item.Id"> Remove </a>
+					</div>
+				</div>
+				<hr>
+
 			}
 		}
 	</div>

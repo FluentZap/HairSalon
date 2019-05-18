@@ -17,7 +17,12 @@ select {
 
 .clientBG {	
 	background-color: darkgoldenrod;
-	background-color: rgba(78, 65, 12, 0.82);
+	background-color: rgba(0, 0, 0, 0.50);
+	grid-template-columns: 1fr 1fr 1fr;
+}
+
+.stylistCustomer {
+	grid-column: 1 / 2;
 }
 
 a {
