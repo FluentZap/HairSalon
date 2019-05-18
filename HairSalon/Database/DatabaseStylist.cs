@@ -97,8 +97,8 @@ namespace KrillinStyles.Database
 		public static List<Stylist> StylistGetAll()
 		{
 			using (var db = new SalonContext(Options))
-			{
-				var stylists = db.Stylists.ToList();
+			{				
+				var stylists = db.Stylists.Include(e => e.StylistSpecialties).ThenInclude(s => s.Specialty).ToList();
 				return stylists;
 			}			
 		}
@@ -149,15 +149,16 @@ namespace KrillinStyles.Database
 		}
 
 
-		public static List<Stylist> StylistGetBySpecialty(int specialty_id)
-		{
-			using (var db = new SalonContext(Options))
-			{
-				var stylists = db.Stylists.Include(e => e.StylistSpecialties).ThenInclude(e => e ;
-
-				return stylists;
-			}
-		}
+		//public static List<Stylist> StylistGetBySpecialty(int specialty_id)
+		//{
+		//	using (var db = new SalonContext(Options))
+		//	{
+		//		var specialty = db.Specialties.Include(e => e.StylistSpecialties).ThenInclude(s => s.Stylist).ToList();
+		//		//var stylists = db.Stylists.Include(e => e.StylistSpecialties).ThenInclude(s => s.Specialty).ToList();
+				
+		//		return stylists;
+		//	}
+		//}
 
 		public static bool StylistLogin(string login_name, string password, string session_id)
 		{

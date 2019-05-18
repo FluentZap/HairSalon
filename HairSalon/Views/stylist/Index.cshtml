@@ -26,6 +26,21 @@
 						<a class="btn-primary btn" asp-controller="stylist" asp-action="edit" asp-route-userId="@item.Id"> Edit </a>
 						<a class="btn-danger btn" asp-controller="stylist" asp-action="destroy" asp-route-userId="@item.Id"> Remove </a>
 					</div>
+
+					<div class="col-md-2 text-left">
+						<ul>
+							@if (item.StylistSpecialties != null)
+							{
+								@foreach (StylistSpecialty specialty in item.StylistSpecialties)
+								{
+									<li>
+										@specialty.Specialty.Name
+									</li>
+								}
+							}
+
+						</ul>
+					</div>
 				</div>
 				<hr>
 

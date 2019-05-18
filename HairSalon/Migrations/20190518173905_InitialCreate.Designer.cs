@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KrillinStyles.Migrations
 {
     [DbContext(typeof(SalonContext))]
-    [Migration("20190517180743_InitialCreate")]
+    [Migration("20190518173905_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

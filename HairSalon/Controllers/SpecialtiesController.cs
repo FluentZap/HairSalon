@@ -95,7 +95,7 @@ namespace KrillinStyles.Controllers
 				Stylist user = DB.StylistGetBySessionId(HttpContext.Session.Id);
 				Specialty specialty = DB.SpecialtyGetAll().Where(b => b.Id == specialtyId).FirstOrDefault();
 				ViewBag.StylistName = user.Name;
-				ViewBag.StylistList = DB.StylistGetAll().Where(b => b.StylistSpecialties.Contains(specialty.StylistSpecialties));
+				//ViewBag.StylistList = DB.StylistGetAll().Where(b => b.StylistSpecialties.Contains(specialty.StylistSpecialties));
 				ViewBag.User = viewUser;
 				//ViewBag.message = ErrorCodeMessages.FromCode(message);
 				return View();
