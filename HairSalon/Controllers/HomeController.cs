@@ -31,7 +31,7 @@ namespace KrillinStyles.Controllers
 		public IActionResult Create(string login_name, string password)
 		{
 			InitSession();
-			login_name.ToLower();
+			login_name = login_name.ToLower();
 			bool loggedIn = DB.StylistLogin(login_name, password, HttpContext.Session.Id);
 			if (loggedIn)
 			{

@@ -69,15 +69,35 @@ namespace KrillinStyles.Controllers
 
 		}
 
+		public IActionResult Update(string login_name, string name, string password, int userId)
+		{
+			if (!DB.StylistCheckBySessionId(HttpContext.Session.Id)) { return RedirectToAction("index", "home"); } //check for logout
+
+			if (login_name == null || name == null || password == null)
+			{
+				return RedirectToAction("Edit", new { message = 2, userId });
+			}
+			login_name = login_name.ToLower();
+			if (!DB.StylistExists(login_name))
+			{
+				DB.StylistUpdate(userId, login_name, "", name, password);
+				return RedirectToAction("index");
+			}
+			else
+			{
+				return RedirectToAction("new", new { message = 1 });
+			}
+		}
+
 		public IActionResult Create(string login_name, string name, string password)
 		{
 			if (!DB.StylistCheckBySessionId(HttpContext.Session.Id) && DB.StylistGetAll().Count > 0) { return RedirectToAction("index", "home"); } //check for logout
 			InitSession();
-			login_name.ToLower();
 			if (login_name == null || name == null || password == null)
 			{
 				return RedirectToAction("new", new { message = 2 });
 			}
+			login_name = login_name.ToLower();
 			if (!DB.StylistExists(login_name))
 			{
 				DB.StylistCreate(login_name, "", name, password);
@@ -87,6 +107,16 @@ namespace KrillinStyles.Controllers
 			{
 				return RedirectToAction("new", new { message = 1 });
 			}
+		}
+
+		public IActionResult Edit(string userId, int message)
+		{
+			if (!DB.StylistCheckBySessionId(HttpContext.Session.Id)) { return RedirectToAction("index", "home"); } //check for logout						
+			ViewBag.User = DB.StylistGetBySessionId(HttpContext.Session.Id);
+			ViewBag.EditUser = DB.StylistGetById(int.Parse(userId));
+			ViewBag.LoggedIn = true;
+			ViewBag.message = ErrorCodeMessages.FromCode(message);
+			return View();
 		}
 
 

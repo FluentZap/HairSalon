@@ -31,6 +31,21 @@ namespace KrillinStyles.Database
 			}			
 		}
 
+		public static long ClientUpdate(int stylist_id, string name, string phone_number, string alt_phone_number, int clientId)
+		{
+			using (var db = new SalonContext(Options))
+			{
+				Stylist stylist = db.Stylists.Where(b => b.Id == stylist_id).FirstOrDefault();
+				var client = db.Clients.Where(b => b.Id == clientId).FirstOrDefault();
+				client.Name = name;
+				client.Phone_number = phone_number;
+				client.Alt_phone_number = alt_phone_number;
+				client.Stylist = stylist;
+				db.SaveChanges();
+				return client.Id;
+			}
+		}
+
 		public static List<Client> ClientGetAll()
 		{
 			using (var db = new SalonContext(Options))
@@ -38,6 +53,14 @@ namespace KrillinStyles.Database
 				var clients = db.Clients.Include("Stylist").ToList();
 				return clients;
 			}			
+		}
+
+		public static Client ClientGetById(int id)
+		{
+			using (var db = new SalonContext(Options))
+			{
+				return db.Clients.Where(b => b.Id == id).FirstOrDefault();
+			}
 		}
 
 		public static List<Client> ClientGetAllFromUser(int stylist_id)

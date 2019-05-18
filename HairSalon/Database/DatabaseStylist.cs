@@ -79,6 +79,21 @@ namespace KrillinStyles.Database
 			return stylist.Id;
 		}
 
+		public static long StylistUpdate(int userId, string login_name, string session_id, string name, string password)
+		{			
+			using (var db = new SalonContext(Options))
+			{
+				Stylist stylist = db.Stylists.Where(b => b.Id == userId).FirstOrDefault();
+				stylist.Login_name = login_name;
+				stylist.Session_id = session_id;
+				stylist.Name = name;
+				stylist.Password = password;
+				db.Update(stylist);
+				db.SaveChanges();
+				return stylist.Id;
+			}
+		}
+
 		public static List<Stylist> StylistGetAll()
 		{
 			using (var db = new SalonContext(Options))

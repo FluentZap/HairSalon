@@ -10,6 +10,7 @@
     <Watch Include="**\*.cshtml" />
     <Watch Include="**\*.css" />
     <Watch Include="**\*.js" />
+    <Watch Remove="Views\client\Edit.cshtml" />
     <Watch Remove="Views\Home\New.cshtml" />
     <Watch Remove="Views\client\Index.cshtml" />
     <Watch Remove="Views\client\New.cshtml" />

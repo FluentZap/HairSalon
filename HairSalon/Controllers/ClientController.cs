@@ -25,7 +25,32 @@ namespace KrillinStyles.Controllers
 			ViewBag.ClientList = DB.ClientGetAll();			
 			ViewBag.StylistName = user.Name;
 			return View();
-		}			
+		}
+
+		public IActionResult Edit(int clientId)
+		{
+			if (!DB.StylistCheckBySessionId(HttpContext.Session.Id)) { return RedirectToAction("index", "home"); } //check for logout
+			ViewBag.LoggedIn = true;
+			Stylist user = DB.StylistGetBySessionId(HttpContext.Session.Id);
+			ViewBag.ClientList = DB.ClientGetAll();
+			ViewBag.StylistName = user.Name;
+			List<Stylist> users = DB.StylistGetAll();
+			users = users.OrderBy(u => u.Name).ToList();
+			ViewBag.UserList = users;
+			ViewBag.ClientEdit = DB.ClientGetById(clientId);
+			return View();
+		}
+
+		public IActionResult Update(string client_name, string phone_number, string alt_phone_number, string stylist_id, int clientId)
+		{
+			if (!DB.StylistCheckBySessionId(HttpContext.Session.Id)) { return RedirectToAction("index", "home"); } //check for logout
+			if (client_name == null || phone_number == null || stylist_id == null)
+			{
+				return RedirectToAction("edit", new { message = 3 });
+			}
+			DB.ClientUpdate(int.Parse(stylist_id), client_name, phone_number, alt_phone_number, clientId);
+			return RedirectToAction("index");
+		}
 
 		public IActionResult New(int message)
 		{
