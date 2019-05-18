@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: May 11, 2019 at 03:27 AM
+-- Generation Time: May 18, 2019 at 02:28 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -25,59 +25,82 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `client`
+-- Table structure for table `clients`
 --
 
-DROP TABLE IF EXISTS `client`;
-CREATE TABLE IF NOT EXISTS `client` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `stylist_id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `phone_number` varchar(255) NOT NULL,
-  `alt_phone_number` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `clients`;
+CREATE TABLE IF NOT EXISTS `clients` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` text,
+  `StylistId` int(11) DEFAULT NULL,
+  `Phone_number` text,
+  `Alt_phone_number` text,
+  PRIMARY KEY (`Id`),
+  KEY `IX_Clients_StylistId` (`StylistId`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `stylist`
+-- Table structure for table `specialties`
 --
 
-DROP TABLE IF EXISTS `stylist`;
-CREATE TABLE IF NOT EXISTS `stylist` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `session_id` varchar(255) NOT NULL,
-  `login_name` varchar(255) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `stylist`
---
-
-INSERT INTO `stylist` (`id`, `session_id`, `login_name`, `name`, `password`) VALUES
-(1, '820add4c-793b-c1b1-611c-bbbe5255d64b', 'root', 'root', 'root'),
-(9, '62145b09-15f1-9722-760f-a66448d00f2e', 'test_man', 'Test Man', 'root');
+DROP TABLE IF EXISTS `specialties`;
+CREATE TABLE IF NOT EXISTS `specialties` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` text,
+  PRIMARY KEY (`Id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `visit`
+-- Table structure for table `stylists`
 --
 
-DROP TABLE IF EXISTS `visit`;
-CREATE TABLE IF NOT EXISTS `visit` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `client_id` int(11) NOT NULL,
-  `stylist_id` int(11) NOT NULL,
-  `date` date NOT NULL,
-  `notes` varchar(255) NOT NULL,
-  `bill` float NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `stylists`;
+CREATE TABLE IF NOT EXISTS `stylists` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Session_id` text,
+  `Login_name` text,
+  `Password` text,
+  `Name` text,
+  PRIMARY KEY (`Id`)
+) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stylistspecialties`
+--
+
+DROP TABLE IF EXISTS `stylistspecialties`;
+CREATE TABLE IF NOT EXISTS `stylistspecialties` (
+  `StylistId` int(11) NOT NULL,
+  `SpecialtyId` int(11) NOT NULL,
+  PRIMARY KEY (`StylistId`,`SpecialtyId`),
+  KEY `IX_StylistSpecialties_SpecialtyId` (`SpecialtyId`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `__efmigrationshistory`
+--
+
+DROP TABLE IF EXISTS `__efmigrationshistory`;
+CREATE TABLE IF NOT EXISTS `__efmigrationshistory` (
+  `MigrationId` varchar(150) NOT NULL,
+  `ProductVersion` varchar(32) NOT NULL,
+  PRIMARY KEY (`MigrationId`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `__efmigrationshistory`
+--
+
+INSERT INTO `__efmigrationshistory` (`MigrationId`, `ProductVersion`) VALUES
+('20190517180743_InitialCreate', '2.2.4-servicing-10062');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
