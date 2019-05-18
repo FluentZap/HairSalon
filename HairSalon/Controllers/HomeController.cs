@@ -9,15 +9,15 @@ using KrillinStyles.Database;
 
 namespace KrillinStyles.Controllers
 {
-    public class HomeController : Controller
-    {
+	public class HomeController : Controller
+	{
 		public void InitSession()
 		{
 			HttpContext.Session.Set("Id", new Byte[0]);
 		}
 
 		public IActionResult Index(int message)
-        {
+		{
 			if (DB.StylistCheckBySessionId(HttpContext.Session.Id)) { return RedirectToAction("index", "stylist"); } //check for login			
 			if (DB.StylistGetAll().Count == 0)
 			{
@@ -26,12 +26,19 @@ namespace KrillinStyles.Controllers
 			ViewBag.LoggedIn = false;
 			ViewBag.message = ErrorCodeMessages.FromCode(message);
 			return View();
-        }
+		}
 
 		public IActionResult Create(string login_name, string password)
 		{
 			InitSession();
-			login_name = login_name.ToLower();
+			if (login_name == null)
+			{
+				return RedirectToAction("index", "home");
+			}
+			else
+			{
+				login_name = login_name.ToLower();
+			}
 			bool loggedIn = DB.StylistLogin(login_name, password, HttpContext.Session.Id);
 			if (loggedIn)
 			{
@@ -56,9 +63,9 @@ namespace KrillinStyles.Controllers
 		}
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-    }
+		public IActionResult Error()
+		{
+			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+		}
+	}
 }

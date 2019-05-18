@@ -15,28 +15,19 @@ namespace KrillinStyles.Controllers
 		{
 			if (!DB.StylistCheckBySessionId(HttpContext.Session.Id)) { return RedirectToAction("index", "home"); } //check for logout
 			ViewBag.LoggedIn = true;
-			//Stylist user = DB.StylistGetBySessionId(HttpContext.Session.Id);
-			//List<Specialty> specialties = 
-			//ViewBag.UserList = users;
-			//ViewBag.StylistName = user.Name;
+			Stylist user = DB.StylistGetBySessionId(HttpContext.Session.Id);
+			List<Specialty> specialties = DB.SpecialtyGetAll();
+			specialties = specialties.OrderBy(u => u.Name).ToList();
+			ViewBag.SpecialtyList = specialties;
+			ViewBag.StylistName = user.Name;
 			return View();
 		}
 
 		public IActionResult New(int message)
 		{
-			if (!DB.StylistCheckBySessionId(HttpContext.Session.Id)) //check for logout
-			{
-				if (DB.StylistGetAll().Count > 0) //no users initiate administrator login 
-				{
-					return RedirectToAction("index", "home");
-				}
-				else
-				{
-					ViewBag.message = ErrorCodeMessages.FromCode(4);
-					return View();
-				}
-			}
+			if (!DB.StylistCheckBySessionId(HttpContext.Session.Id)) { return RedirectToAction("index", "home"); } //check for logout
 			ViewBag.LoggedIn = true;
+			ViewBag.SpecialtyList = DB.SpecialtyGetAll();
 			ViewBag.message = ErrorCodeMessages.FromCode(message);
 			return View();
 		}

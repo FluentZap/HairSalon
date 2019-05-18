@@ -10,7 +10,7 @@
 
 	<h3>Current Clients of @ViewBag.User.Name</h3>
 	<a class="btn-danger btn" asp-controller="client" asp-action="destroyAll" asp-route-stylistId="@ViewBag.User.Id"> Clear All Clients for @ViewBag.User.Name</a>
-	<div class="container clientBG">
+	<div class="container clientBG rounded">
 		<hr>
 		@if (ViewBag.ClientList != null)
 		{
