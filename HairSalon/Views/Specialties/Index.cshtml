@@ -8,8 +8,8 @@
 	<h1 class="display-3">Welcome @ViewBag.StylistName</h1>
 	<h4 class="text-danger">@ViewBag.message</h4>
 
-	<h3>Current Clients of @ViewBag.User.Name</h3>
-	<a class="btn-danger btn" asp-controller="client" asp-action="destroyAll" asp-route-stylistId="@ViewBag.User.Id"> Clear All Clients for @ViewBag.User.Name</a>
+	<h3>Clients</h3>
+	<a class="btn-danger btn" asp-controller="client" asp-action="destroyAll"> Clear All </a>
 	<div class="container clientBG">
 		<hr>
 		@if (ViewBag.ClientList != null)
@@ -24,7 +24,7 @@
 						}
 						else
 						{
-							<p><b>Stylist</b>: @item.Stylist.Name</p>
+							<p><a asp-controller="stylist" asp-action="show" asp-route-userId="@item.Stylist.Id"> <b>Stylist</b>: @item.Stylist.Name </a></p>
 						}
 						<p><b>Client Name</b>: @item.Name</p>
 					</div>
