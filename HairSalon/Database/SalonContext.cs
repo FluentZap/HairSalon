@@ -61,7 +61,7 @@ namespace KrillinStyles.Database
 		public string Login_name { get; set; }
 		public string Password { get; set; }
 		public string Name { get; set; }
-		public ICollection<StylistSpecialty> StylistSpecialties { get; set; }
+		public ICollection<StylistSpecialty> StylistSpecialties { get; } = new List<StylistSpecialty>();
 	}
 
 
@@ -69,6 +69,6 @@ namespace KrillinStyles.Database
 	{
 		public int Id { get; set; }
 		public string Name { get; set; }
-		public ICollection<StylistSpecialty> StylistSpecialties { get; set; }
+		public ICollection<StylistSpecialty> StylistSpecialties { get; } = new List<StylistSpecialty>();
 	}
 }

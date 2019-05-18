@@ -148,6 +148,17 @@ namespace KrillinStyles.Database
 			}
 		}
 
+
+		public static List<Stylist> StylistGetBySpecialty(int specialty_id)
+		{
+			using (var db = new SalonContext(Options))
+			{
+				var stylists = db.Stylists.Include(e => e.StylistSpecialties).ThenInclude(e => e ;
+
+				return stylists;
+			}
+		}
+
 		public static bool StylistLogin(string login_name, string password, string session_id)
 		{
 			if (StylistExists(login_name))

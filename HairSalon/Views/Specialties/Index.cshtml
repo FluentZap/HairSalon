@@ -18,12 +18,12 @@
 			{
 				<div class="row justify-content-center align-items-center">
 					<div class="col-md-4 text-left">
-						<p><a asp-controller="specialties" asp-action="show" asp-route-userId="@item.Id"><b>Specialty</b>: @item.Name </a></p>
+						<p><b>Specialty</b>: @item.Name</p>
 					</div>
 
 					<div class="col-md-2 text-left">
-						<a class="btn-primary btn" asp-controller="specialties" asp-action="edit" asp-route-clientId="@item.Id"> Edit </a>
-						<a class="btn-danger btn" asp-controller="specialties" asp-action="destroy" asp-route-clientId="@item.Id"> Remove </a>
+						<a class="btn-primary btn" asp-controller="specialties" asp-action="edit" asp-route-specialtyId="@item.Id"> Edit </a>
+						<a class="btn-danger btn" asp-controller="specialties" asp-action="destroy" asp-route-specialtyId="@item.Id"> Remove </a>
 					</div>
 				</div>
 				<hr>

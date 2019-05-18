@@ -7,9 +7,8 @@
 <div class="text-center">
 	<h1 class="display-3">Welcome @ViewBag.StylistName</h1>
 	<h4 class="text-danger">@ViewBag.message</h4>
-
 	<h3>Clients</h3>
-	<a class="btn-danger btn" asp-controller="client" asp-action="destroyAll"> Clear All </a>
+	<a class="btn-success btn" asp-controller="client" asp-action="new">Add new Client</a>
 	<div class="container clientBG rounded">
 		<hr>
 		@if (ViewBag.ClientList != null)
@@ -97,4 +96,5 @@
 			}
 		}
 	</div>
+	<a class="btn-danger btn" asp-controller="client" asp-action="destroyAll"> Clear All </a>
 </div>
