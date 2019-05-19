@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: May 18, 2019 at 02:28 AM
+-- Generation Time: May 19, 2019 at 05:26 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -37,19 +37,16 @@ CREATE TABLE IF NOT EXISTS `clients` (
   `Alt_phone_number` text,
   PRIMARY KEY (`Id`),
   KEY `IX_Clients_StylistId` (`StylistId`)
-) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `clients`
 --
 
 INSERT INTO `clients` (`Id`, `Name`, `StylistId`, `Phone_number`, `Alt_phone_number`) VALUES
-(17, 'GoldmanPerson', 16, '345456456', '23457234'),
-(22, 'The Golden Sun', 11, '272346', NULL),
-(16, 'Guuuoop', 12, '66456', NULL),
-(18, 'RuRuRook', 16, '23423', NULL),
-(19, 'Mr YoYoTo', 17, '22523', NULL),
-(20, 'Goldman', 13, '3545345', NULL);
+(1, 'Goldman', 2, '564465', NULL),
+(2, 'GogogogoMan', 2, '34645', NULL),
+(3, 'PutPutin', 1, '6456', NULL);
 
 -- --------------------------------------------------------
 
@@ -62,14 +59,17 @@ CREATE TABLE IF NOT EXISTS `specialties` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Name` text,
   PRIMARY KEY (`Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `specialties`
 --
 
 INSERT INTO `specialties` (`Id`, `Name`) VALUES
-(1, 'The good Stuff');
+(1, 'Crazy Blue Flow'),
+(3, 'Super Top'),
+(4, 'Crazy'),
+(5, 'The great Stuff');
 
 -- --------------------------------------------------------
 
@@ -85,20 +85,16 @@ CREATE TABLE IF NOT EXISTS `stylists` (
   `Password` text,
   `Name` text,
   PRIMARY KEY (`Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `stylists`
 --
 
 INSERT INTO `stylists` (`Id`, `Session_id`, `Login_name`, `Password`, `Name`) VALUES
-(11, '51138d63-c850-b1fc-b986-9032de00b004', 'toad', 'root', 'Mr Froggie'),
-(12, '', 'OldGuy22', 'root', '423'),
-(13, '', 'badass', 'root', 'Mr Clean'),
-(14, '', 'goooper', 'root', 'Dipper'),
-(15, '', 'thenewguy22', 'root', 'Yooroshiku'),
-(16, '', 'clapper', 'rot', 'Clapper'),
-(17, '', 'clapperfour', 'root', 'ClapperFour');
+(1, '', 'toad', 'root', 'Mr Froggie'),
+(2, '', 'badass2', 'root', 'Mr Clean Living Days'),
+(3, '', 'oldguy22', 'root', 'Roshi');
 
 -- --------------------------------------------------------
 
@@ -113,6 +109,17 @@ CREATE TABLE IF NOT EXISTS `stylistspecialties` (
   PRIMARY KEY (`StylistId`,`SpecialtyId`),
   KEY `IX_StylistSpecialties_SpecialtyId` (`SpecialtyId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `stylistspecialties`
+--
+
+INSERT INTO `stylistspecialties` (`StylistId`, `SpecialtyId`) VALUES
+(1, 1),
+(1, 2),
+(2, 1),
+(2, 4),
+(3, 5);
 
 -- --------------------------------------------------------
 
@@ -132,7 +139,7 @@ CREATE TABLE IF NOT EXISTS `__efmigrationshistory` (
 --
 
 INSERT INTO `__efmigrationshistory` (`MigrationId`, `ProductVersion`) VALUES
-('20190517180743_InitialCreate', '2.2.4-servicing-10062');
+('20190518173905_InitialCreate', '2.2.4-servicing-10062');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
