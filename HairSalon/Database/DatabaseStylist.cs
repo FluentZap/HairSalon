@@ -45,7 +45,7 @@ namespace KrillinStyles.Database
 				var stylist = db.Stylists.Where(b => b.Session_id == session_id).FirstOrDefault();
 				return stylist != null;
 			}
-		}		
+		}
 
 		public static void StylistUpdateSessionId(string login_name, string session_id)
 		{
@@ -54,7 +54,7 @@ namespace KrillinStyles.Database
 				var stylist = db.Stylists.Where(b => b.Login_name == login_name).FirstOrDefault();
 				stylist.Session_id = session_id;
 				db.SaveChanges();
-			}			
+			}
 		}
 
 		public static void StylistLogout(string session_id)
@@ -79,15 +79,45 @@ namespace KrillinStyles.Database
 			return stylist.Id;
 		}
 
-		public static long StylistUpdate(int userId, string login_name, string session_id, string name, string password)
-		{			
+		public static void StylistRemoveSpecialty(int userId, int specialtyID)
+		{
 			using (var db = new SalonContext(Options))
 			{
-				Stylist stylist = db.Stylists.Where(b => b.Id == userId).FirstOrDefault();
-				stylist.Login_name = login_name;
-				stylist.Session_id = session_id;
+				Stylist stylist = db.Stylists
+					.Where(b => b.Id == userId)
+					.Include(ss => ss.StylistSpecialties)
+					.ThenInclude(s => s.Specialty)
+					.FirstOrDefault();
+				stylist.StylistSpecialties.Remove(stylist.StylistSpecialties.Where(s => s.SpecialtyId == specialtyID).FirstOrDefault());
+				db.SaveChanges();
+			}
+		}
+
+		public static long StylistUpdate(int userId, string login_name, string session_id, string name, string password, List<int> specialties)
+		{
+			using (var db = new SalonContext(Options))
+			{
+				Stylist stylist = db.Stylists
+					.Where(b => b.Id == userId)
+					.Include(ss => ss.StylistSpecialties)
+					.ThenInclude(s => s.Specialty)
+					.FirstOrDefault();
+
+				foreach(int item in specialties)
+				{
+					Specialty specialty = db.Specialties.Where(s => s.Id == item).FirstOrDefault();
+					if (stylist.StylistSpecialties.Where(s => s.Specialty == specialty).FirstOrDefault() == null)
+					{
+						stylist.StylistSpecialties.Add(new StylistSpecialty { Stylist = stylist, Specialty = specialty });
+					}
+				}
+				
+				stylist.Login_name = login_name;				
 				stylist.Name = name;
-				stylist.Password = password;
+				if (password != null)
+				{
+					stylist.Password = password;
+				}
 				db.Update(stylist);
 				db.SaveChanges();
 				return stylist.Id;
@@ -97,10 +127,10 @@ namespace KrillinStyles.Database
 		public static List<Stylist> StylistGetAll()
 		{
 			using (var db = new SalonContext(Options))
-			{				
+			{
 				var stylists = db.Stylists.Include(e => e.StylistSpecialties).ThenInclude(s => s.Specialty).ToList();
 				return stylists;
-			}			
+			}
 		}
 
 		public static Stylist StylistGetByName(string login_name)
@@ -109,7 +139,7 @@ namespace KrillinStyles.Database
 			{
 				var stylist = db.Stylists.Where(b => b.Login_name == login_name).FirstOrDefault();
 				return stylist;
-			}			
+			}
 		}
 
 		public static Stylist StylistGetBySessionId(string session_id)
@@ -127,7 +157,7 @@ namespace KrillinStyles.Database
 			{
 				var stylist = db.Stylists.Where(b => b.Id == id).FirstOrDefault();
 				return stylist;
-			}			
+			}
 		}
 
 		public static void StylistRemove(int id)
@@ -149,16 +179,17 @@ namespace KrillinStyles.Database
 		}
 
 
-		//public static List<Stylist> StylistGetBySpecialty(int specialty_id)
-		//{
-		//	using (var db = new SalonContext(Options))
-		//	{
-		//		var specialty = db.Specialties.Include(e => e.StylistSpecialties).ThenInclude(s => s.Stylist).ToList();
-		//		//var stylists = db.Stylists.Include(e => e.StylistSpecialties).ThenInclude(s => s.Specialty).ToList();
-				
-		//		return stylists;
-		//	}
-		//}
+		public static Specialty StylistGetBySpecialty(int specialty_id)
+		{
+			using (var db = new SalonContext(Options))
+			{
+				var specialty = db.Specialties
+					.Where(s => s.Id == specialty_id)
+					.Include(e => e.StylistSpecialties)
+					.ThenInclude(s => s.Stylist).FirstOrDefault();
+				return specialty;
+			}
+		}
 
 		public static bool StylistLogin(string login_name, string password, string session_id)
 		{
@@ -178,7 +209,7 @@ namespace KrillinStyles.Database
 			else
 			{
 				return false;
-			}			
+			}
 		}
 	}
 }

@@ -18,7 +18,7 @@
 			{
 				<div class="row justify-content-center align-items-center">
 					<div class="col-md-4 text-left">
-						<p><b>Specialty</b>: @item.Name</p>
+						<p><a asp-controller="specialties" asp-action="show" asp-route-specialtyId="@item.Id"><b>Specialty</b>: @item.Name </a></p>						
 					</div>
 
 					<div class="col-md-2 text-left">

@@ -8,27 +8,25 @@
 	<h1 class="display-3">Welcome @ViewBag.StylistName</h1>
 	<h4 class="text-danger">@ViewBag.message</h4>
 
-	<h3>Stylists</h3>
+	<h3>Stylists who specialize in @ViewBag.Speciality.Name</h3>
 	<a class="btn-success btn" asp-controller="stylist" asp-action="new">Add new Stylist</a>
 	<div class="container clientBG rounded">
 		<hr>
-		@if (ViewBag.UserList != null)
+		@if (ViewBag.StylistList != null)
 		{
-			foreach (Stylist item in ViewBag.UserList)
-			{
-
+			foreach (StylistSpecialty item in ViewBag.StylistList)
+			{						
 				<div class="row justify-content-center align-items-center">
 					<div class="col-md-3 text-left">
-						<h5><a asp-controller="stylist" asp-action="show" asp-route-userId="@item.Id"> @item.Name </a></h5>
+						<h5><a asp-controller="stylist" asp-action="show" asp-route-userId="@item.Stylist.Id"> @item.Stylist.Name </a></h5>
 					</div>
 
 					<div class="col-md-2 text-left">
-						<a class="btn-primary btn" asp-controller="stylist" asp-action="edit" asp-route-userId="@item.Id"> Edit </a>
-						<a class="btn-danger btn" asp-controller="stylist" asp-action="destroy" asp-route-userId="@item.Id"> Remove </a>
+						<a class="btn-primary btn" asp-controller="stylist" asp-action="edit" asp-route-userId="@item.Stylist.Id"> Edit </a>
+						<a class="btn-danger btn" asp-controller="stylist" asp-action="destroy" asp-route-userId="@item.Stylist.Id"> Remove </a>
 					</div>
 				</div>
 				<hr>
-
 			}
 		}
 	</div>

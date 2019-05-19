@@ -69,18 +69,18 @@ namespace KrillinStyles.Controllers
 
 		}
 
-		public IActionResult Update(string login_name, string name, string password, int userId)
+		public IActionResult Update(string login_name, string name, string password, int userId, List<int> specialties)
 		{
 			if (!DB.StylistCheckBySessionId(HttpContext.Session.Id)) { return RedirectToAction("index", "home"); } //check for logout
 
-			if (login_name == null || name == null || password == null)
+			if (login_name == null || name == null)
 			{
 				return RedirectToAction("Edit", new { message = 2, userId });
 			}
 			login_name = login_name.ToLower();
-			if (!DB.StylistExists(login_name))
+			if (DB.StylistExistsById(userId))
 			{
-				DB.StylistUpdate(userId, login_name, "", name, password);
+				DB.StylistUpdate(userId, login_name, "", name, password, specialties);
 				return RedirectToAction("index");
 			}
 			else
@@ -112,10 +112,19 @@ namespace KrillinStyles.Controllers
 		public IActionResult Edit(string userId, int message)
 		{
 			if (!DB.StylistCheckBySessionId(HttpContext.Session.Id)) { return RedirectToAction("index", "home"); } //check for logout						
-			ViewBag.User = DB.StylistGetBySessionId(HttpContext.Session.Id);
-			ViewBag.EditUser = DB.StylistGetById(int.Parse(userId));
-			ViewBag.LoggedIn = true;
 			ViewBag.message = ErrorCodeMessages.FromCode(message);
+			ViewBag.User = DB.StylistGetBySessionId(HttpContext.Session.Id);
+			
+			List<Stylist> users = DB.StylistGetAll();
+			ViewBag.UserList = users;		
+
+			ViewBag.EditUser = DB.StylistGetById(int.Parse(userId));
+
+			List<Specialty> specialties = DB.SpecialtyGetAll();
+			specialties = specialties.OrderBy(u => u.Name).ToList();
+			ViewBag.SpecialtyList = specialties;
+			ViewBag.LoggedIn = true;
+
 			return View();
 		}
 
@@ -128,6 +137,16 @@ namespace KrillinStyles.Controllers
 				DB.StylistRemove(int.Parse(userId));
 			}
 			return RedirectToAction("index");
+		}
+
+		public IActionResult DestroySpeciality(int userId, int specialtyId)
+		{
+			if (!DB.StylistCheckBySessionId(HttpContext.Session.Id)) { return RedirectToAction("index", "home"); } //check for logout
+			if (DB.StylistExistsById(userId))
+			{
+				DB.StylistRemoveSpecialty(userId, specialtyId);
+			}
+			return RedirectToAction("edit", new { userId });
 		}
 
 		public IActionResult DestroyAll()

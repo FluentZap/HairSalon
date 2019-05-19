@@ -1,32 +1,98 @@
 ﻿@{
-    ViewData["Title"] = "Edit Stylist";
+	ViewData["Title"] = "Welcome";
 }
 
 <link rel="stylesheet" href="~/css/index.css" />
 
 <div class="text-center">
-	<h1 class="display-3">Edit @ViewBag.EditUser.Name</h1>
+	<h1 class="display-3">Welcome @ViewBag.User.Name</h1>
 	<h4 class="text-danger">@ViewBag.message</h4>
+	<h3>Stylists</h3>
+	<a class="btn-success btn" asp-controller="stylist" asp-action="new">Add new Stylist</a>
+	<div class="container clientBG rounded">
+		<hr>
+		@if (ViewBag.UserList != null)
+		{
+			foreach (Stylist item in ViewBag.UserList)
+			{
+				@if (item.Id == ViewBag.EditUser.Id)
+				{
+					<form asp-controller="stylist" asp-action="update" method="post">
+						<input type="hidden" name="userId" value="@item.Id" />
+						<div class="row justify-content-center align-items-center bg-warning">							
+							<div class="col-md-3 text-left">
+								<div class="form-group">
+									<label for="user_name">Stylist Name</label>
+									<input type="text" class="form-control" name="name" value="@item.Name" placeholder="@item.Name" required>
+									<label for="user_name">Stylist Login</label>
+									<input type="text" class="form-control" name="login_name" value="@item.Login_name" placeholder="@item.Login_name" required>
+									<label for="user_name">Stylist Login</label>
+									<input type="password" class="form-control" name="password" placeholder="Password">
+								</div>
+							</div>
 
-	<form asp-controller="Stylist" asp-action="Update" method="post">
-		
-		<input type="hidden" name="userId" value="@ViewBag.EditUser.Id">
-		
-		<div class="form-group">
-			<label for="userId">User Name</label>
-			<input type="text" class="form-control" name="login_name" placeholder="Stylist">
-		</div>
+							<select class="form-control" name="specialties" multiple>
+								@foreach (Specialty specialty in ViewBag.SpecialtyList)
+								{
+									<option value="@specialty.Id">@specialty.Name</option>
+								}
+							</select>
 
-		<div class="form-group">
-			<label for="userId">Stylist Name</label>
-			<input type="text" class="form-control" name="name" placeholder="Krillin">
-		</div>
+							<div class="col-md-2 text-left">
+								<button class="btn-success btn" type="submit"> Done </button>
+								<a class="btn-danger btn" asp-controller="stylist" asp-action="destroy" asp-route-userId="@item.Id"> Remove </a>
+							</div>
 
-		<div class="form-group">
-			<label for="userPassword">Password</label>
-			<input type="password" class="form-control" name="password" placeholder="Password">
-		</div>
+							<div class="col-md-2 text-left">
+								<ul>
+									@if (item.StylistSpecialties != null)
+									{
+										@foreach (StylistSpecialty specialty in item.StylistSpecialties)
+										{
+									<li>										
+										@specialty.Specialty.Name
+										<a class="btn-danger btn text-right" asp-controller="stylist" asp-action="DestroySpeciality" asp-route-specialtyId="@specialty.Specialty.Id"  asp-route-userId="@item.Id"> Remove </a>
+									</li>
+										}
+									}
 
-		<button class="btn-primary btn" type="submit">Create</button>
-	</form>
+								</ul>
+							</div>
+						</div>
+					</form>
+				}
+				else
+				{
+					<div class="row justify-content-center align-items-center">
+						<div class="col-md-3 text-left">
+							<h5><a asp-controller="stylist" asp-action="show" asp-route-userId="@item.Id"> @item.Name </a></h5>
+						</div>
+
+						<div class="col-md-2 text-left">
+							<a class="btn-primary btn" asp-controller="stylist" asp-action="edit" asp-route-userId="@item.Id"> Edit </a>
+							<a class="btn-danger btn" asp-controller="stylist" asp-action="destroy" asp-route-userId="@item.Id"> Remove </a>
+						</div>
+
+						<div class="col-md-2 text-left">
+							<ul>
+								@if (item.StylistSpecialties != null)
+								{
+									@foreach (StylistSpecialty specialty in item.StylistSpecialties)
+									{
+										<li>
+											@specialty.Specialty.Name
+										</li>
+									}
+								}
+
+							</ul>
+						</div>
+					</div>
+				}
+				<hr>
+
+			}
+		}
+	</div>
+	<a class="btn-danger btn" asp-controller="stylist" asp-action="destroyAll"> Clear All </a>
 </div>

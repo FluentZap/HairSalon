@@ -64,7 +64,6 @@ namespace KrillinStyles.Database
 		public List<StylistSpecialty> StylistSpecialties { get; } = new List<StylistSpecialty>();
 	}
 
-
 	public class Specialty
 	{
 		public int Id { get; set; }
