@@ -5,7 +5,7 @@ Krillin Styles is a database test applicaiton to practice database calls and rel
 
 ## Installation
 
-https://github.com/FluentZap/WordCounter
+https://github.com/FluentZap/HairSalon
 * Clone the repository and compile with a C# compiler. It uses .NET Core 2.2, ASP.NET and Entity Framework Core
 * You must have access to a MYSQL database
 * Set the setting in the Database.cs file to point to your MYSQL
